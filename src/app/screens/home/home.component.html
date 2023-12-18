@@ -1,1 +1,16 @@
-<p>home works!</p>
+<div class="map-container">
+    <!-- Ligne 1 -->
+    <div class="line line1">
+        <div *ngFor="let station of metroLine1; let i = index" class="station" [style.left]="getStationPosition(i, metroLine1.length)" [attr.data-name]="station"></div>
+    </div>
+
+    <!-- Ligne 2A -->
+    <div class="line line2 line2A">
+        <div *ngFor="let station of metroLine2A; let i = index" class="station" [style.left]="getStationPosition(i, metroLine2A.length)" [attr.data-name]="station"></div>
+    </div>
+
+    <!-- Ligne 2B -->
+    <div class="line line2 line2B">
+        <div *ngFor="let station of metroLine2B; let i = index" class="station" [style.left]="getStationPosition(i, metroLine2B.length)" [attr.data-name]="station"></div>
+    </div>
+</div>

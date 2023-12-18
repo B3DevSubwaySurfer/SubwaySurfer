@@ -1,0 +1,44 @@
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 1000px; /* Ajustez selon vos besoins */
+    padding-top: 50px;
+    box-sizing: border-box;
+}
+
+.line {
+    position: absolute;
+    width: 95%;
+    height: 4px;
+    left: 2.5%;
+}
+
+.line1 { top: 100px; background-color: #FF0000; }
+.line2 { height: 8px; }
+.line2A { top: 300px; background-color: #FFD700; }
+.line2B { top: 400px; background-color: #FFD700; }
+
+.station {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    border: 2px solid #000000;
+}
+
+.station::after {
+    content: attr(data-name);
+    position: absolute;
+    width: 70px;
+    max-height: 40px;
+    bottom: 200%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    white-space: normal;
+    font-size: 10px;
+    text-align: center;
+    overflow: hidden;
+    line-height: 15px;
+}
