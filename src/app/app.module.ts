@@ -4,13 +4,12 @@ import { RouterOutlet } from "@angular/router";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from './screens/home/home.component';
-import { TvmComponent } from './components/tvm/tvm.component';
 import { StationComponent } from "./components/station/station.component";
 import {StationPreviewComponent } from "./screens/station-preview/station-preview.component";
 import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, TvmComponent, StationComponent, StationPreviewComponent],
+  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent],
   imports: [BrowserModule, RouterOutlet, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],

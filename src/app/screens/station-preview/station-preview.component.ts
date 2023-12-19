@@ -7,14 +7,14 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./station-preview.component.css']
 })
 export class StationPreviewComponent implements OnInit {
-  stationName: string | null = null;
+  stationData: any;
 
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.stationName = params['stationName'];
+      this.stationData = JSON.parse(params['stationData']);
     });
   }
 

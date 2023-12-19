@@ -50,20 +50,13 @@ export class HomeComponent {
     ])
   ];
 
-  selectedStation: string | null = null;
-
   constructor(private router: Router) { }
 
   getStationPosition(index: number, arrayLength: number): string {
     return (index / (arrayLength - 1)) * 100 + '%';
   }
 
-  onSelectStation(station: string): void {
-    this.selectedStation = station;
-    this.router.navigate(['/preview'], { queryParams: { stationName: station } });
-  }
-
-  isStationSelected(station: string): boolean {
-    return this.selectedStation === station;
+  onSelectStation(station: Station): void {
+    this.router.navigate(['/preview'], { queryParams: { stationData: JSON.stringify(station) } });
   }
 }

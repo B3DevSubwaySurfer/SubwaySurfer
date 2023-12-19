@@ -1,33 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { TvmComponent } from '../tvm/tvm.component';
+import {Component, Input, OnInit} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-station',
   templateUrl: './station.component.html',
   styleUrls: ['./station.component.css']
 })
-export class StationComponent {
-  @Input() stationName!: string;
+export class StationComponent implements OnInit {
+  @Input() stationData!: any;
 
-  // Create three instances of TvmComponent with different values
-  tvm1: TvmComponent = {
-    id: 1,
-    ink_level: 100,
-    paper_level: 100,
-    status: 1
-  };
+  constructor(private route: ActivatedRoute) { }
 
-  tvm2: TvmComponent = {
-    id: 2,
-    ink_level: 100,
-    paper_level: 100,
-    status: 2
-  };
-
-  tvm3: TvmComponent = {
-    id: 3,
-    ink_level: 100,
-    paper_level: 100,
-    status: 3
-  };
+  ngOnInit(): void {
+    console.log(this.stationData)
+  }
 }
