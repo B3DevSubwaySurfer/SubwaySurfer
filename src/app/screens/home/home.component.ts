@@ -1,22 +1,53 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+class Borne {
+  constructor(public id: number, public ink_level: number, public paper_level: number, public status: number) {}
+}
+
+class Station {
+  constructor(public name: string, public bornes: Borne[]) {}
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  metroLine1: string[] = [
-    'Lille CHU-Eurasanté', 'CHU - Centre O. Lambret', 'Porte des Postes', 'Wazemmes', 'Gambetta', 'République Beaux-Arts', 'Rihour', 'Gare Lille Flandres', 'Caulier', 'Fives', 'Marbrerie', 'Mairie d\'Hellemmes', 'Square Flandres', 'Pont de Bois', 'Villeneuve d\'Ascq Hôtel de Ville', 'Triolo', 'Cité Scientifique Pr Gabillard', 'Villeneuve d\'Ascq 4 Cantons Stade Pierre Mauroy'
+  metroLine1: Station[] = [
+    new Station('Lille CHU-Eurasanté', [
+      new Borne(1, 100, 100, 1),
+      new Borne(2, 95, 100, 1)
+    ]),
+    new Station('Gare Lille Flandres', [
+      new Borne(1, 100, 100, 1),
+      new Borne(2, 95, 100, 1),
+      new Borne(3, 100, 90, 1),
+      new Borne(4, 100, 100, 0)
+    ])
   ];
 
-  metroLine2A: string[] = [
-    'Saint-Philibert', 'Bourg', 'Maison des Enfants', 'Pont Supérieur', 'Lomme Lambersart', 'Canteleu', 'Bois Blancs', 'Port de Lille', 'Cormontaigne', 'Montebello', 'Porte des Postes', 'Porte d\'Arras', 'Porte de Douai', 'Porte de Valenciennes', 'Lille Grand Palais', 'Mairie de Lille', 'Gare Lille Flandres', 'Gare Lille Europe', 'Saint-Maurice Pellevoisin', 'Mons Sarts'
+  metroLine2A: Station[] = [
+    new Station('Saint-Philibert', [
+      new Borne(1, 100, 100, 1),
+      new Borne(2, 95, 80, 1)
+    ]),
+    new Station('Gare Lille Flandres', [
+      new Borne(5, 100, 100, 1),
+      new Borne(6, 90, 100, 1)
+    ])
   ];
 
-  metroLine2B: string[] = [
-    'Mairie de Mons', 'Fort de Mons', 'Les Prés Edgard Pisani', 'Jean Jaurès', 'Wasquehal Hôtel de Ville', 'Wasquehal Pavé de Lille', 'Croix - Centre', 'Epeule - Montesquieu', 'Roubaix Grand Place', 'Eurotéléport', 'Roubaix Charles de Gaulle', 'Alsace', 'Mercure', 'Carliers', 'Gare de Tourcoing', 'Tourcoing Centre', 'Colbert', 'Phalempins', 'Pont de Neuville', 'Tourcoing Sébastopol', 'Tourcoing C.H. Dron'
+  metroLine2B: Station[] = [
+    new Station('Mairie de Mons', [
+      new Borne(1, 100, 100, 1),
+      new Borne(2, 85, 90, 0)
+    ]),
+    new Station('Tourcoing C.H. Dron', [
+      new Borne(1, 100, 100, 1),
+      new Borne(2, 80, 80, 1)
+    ])
   ];
 
   selectedStation: string | null = null;
