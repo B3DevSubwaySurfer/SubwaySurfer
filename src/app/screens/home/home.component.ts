@@ -18,7 +18,17 @@ export class HomeComponent {
     'Mairie de Mons', 'Fort de Mons', 'Les Prés Edgard Pisani', 'Jean Jaurès', 'Wasquehal Hôtel de Ville', 'Wasquehal Pavé de Lille', 'Croix - Centre', 'Epeule - Montesquieu', 'Roubaix Grand Place', 'Eurotéléport', 'Roubaix Charles de Gaulle', 'Alsace', 'Mercure', 'Carliers', 'Gare de Tourcoing', 'Tourcoing Centre', 'Colbert', 'Phalempins', 'Pont de Neuville', 'Tourcoing Sébastopol', 'Tourcoing C.H. Dron'
   ];
 
+  selectedStation: string | null = null;  // Déclaration de la propriété
+
   getStationPosition(index: number, arrayLength: number): string {
     return (index / (arrayLength - 1)) * 100 + '%';
+  }
+
+  onSelectStation(station: string): void {
+    this.selectedStation = station;  // Mise à jour de la propriété
+  }
+
+  isStationSelected(station: string): boolean {
+    return this.selectedStation === station;  // Vérification de la station sélectionnée
   }
 }

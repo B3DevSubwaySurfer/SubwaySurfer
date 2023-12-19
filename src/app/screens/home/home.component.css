@@ -1,7 +1,7 @@
 .map-container {
     position: relative;
     width: 100%;
-    height: 1000px; /* Ajustez selon vos besoins */
+    height: 1000px;
     padding-top: 50px;
     box-sizing: border-box;
 }
@@ -9,23 +9,24 @@
 .line {
     position: absolute;
     width: 95%;
-    height: 4px;
+    height: 8px;
     left: 2.5%;
 }
 
-.line1 { top: 100px; background-color: #FF0000; }
-.line2 { height: 8px; }
-.line2A { top: 300px; background-color: #FFD700; }
-.line2B { top: 400px; background-color: #FFD700; }
+.line1 { top: 100px; background-color: #FFD700; }
+.line2A { top: 300px; background-color: #FF0000; }
+.line2B { top: 400px; background-color: #FF0000; }
 
 .station {
     position: absolute;
     width: 20px;
     height: 20px;
+    margin-top: -8px;
     margin-left: -10px;
     background-color: #FFFFFF;
     border-radius: 50%;
     border: 2px solid #000000;
+    cursor: pointer;
 }
 
 .station::after {
