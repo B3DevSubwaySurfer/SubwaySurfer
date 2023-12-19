@@ -7,7 +7,7 @@ import { TvmComponent } from '../tvm/tvm.component';
   styleUrls: ['./station.component.css']
 })
 export class StationComponent {
-  @Input() stationNumber!: number;
+  @Input() stationName!: string;
 
   // Create three instances of TvmComponent with different values
   tvm1: TvmComponent = {
