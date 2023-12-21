@@ -14,13 +14,14 @@ export class AppComponent implements OnInit {
   metroLine2B: StationClasse[] = [];
 
   ngOnInit() {
-    // this.initializeData();
+    this.initializeData();
   }
 
   constructor(private localStorageService: LocalStorageService) {
     // Execute the function every 2 seconds
     setInterval(() => {
-      this.initializeData();
+      // this.initializeData();
+      this.decrementBorneLevels();
       this.saveDataToLocalStorage();
     }, 1000);
   }
@@ -71,4 +72,14 @@ export class AppComponent implements OnInit {
 
     this.localStorageService.saveData("metroLinesData", metroLines);
   }
+
+  private decrementBorneLevels() {
+    const inkDecrement = 5;
+    const paperDecrement = 3;
+
+    this.metroLine1.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
+    this.metroLine2A.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
+    this.metroLine2B.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
+  }
+
 }
