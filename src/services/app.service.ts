@@ -78,17 +78,9 @@ export class AppService {
         });
     }
 
-    public resetInkLevels() {
-        this.resetLevelsForLine(this.metroLine1);
-        this.resetLevelsForLine(this.metroLine2A);
-        this.resetLevelsForLine(this.metroLine2B);
-        this.saveDataToLocalStorage(); // Sauvegarder les données après la réinitialisation
-    }
-
-    private resetLevelsForLine(line: StationClasse[]) {
-        line.forEach(station => {
-            station.bornes.forEach(borne => borne.resetLevels(100));
-        });
+    public resetInkLevelForBorne(borne: BorneClasse) {
+        borne.resetLevels(100);
+        this.saveDataToLocalStorage();
     }
 
     private saveDataToLocalStorage() {
