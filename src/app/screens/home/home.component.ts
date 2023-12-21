@@ -1,62 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-class Borne {
-  constructor(public id: number, public ink_level: number, public paper_level: number, public status: number) {}
-}
-
-class Station {
-  constructor(public name: string, public bornes: Borne[]) {}
-}
+import { LocalStorageService } from '../../../services/localstorage.services';
+import { StationClasse} from "../../../classes/station.classe";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
-  metroLine1: Station[] = [
-    new Station('Lille CHU-Eurasanté', [
-      new Borne(1, 100, 100, 1),
-      new Borne(2, 95, 100, 1)
-    ]),
-    new Station('Gare Lille Flandres', [
-      new Borne(1, 100, 100, 1),
-      new Borne(2, 95, 100, 1),
-      new Borne(3, 100, 90, 1),
-      new Borne(4, 100, 100, 0)
-    ])
-  ];
+export class HomeComponent implements OnInit {
+  metroLine1: StationClasse[] = [];
+  metroLine2A: StationClasse[] = [];
+  metroLine2B: StationClasse[] = [];
 
-  metroLine2A: Station[] = [
-    new Station('Saint-Philibert', [
-      new Borne(1, 100, 100, 1),
-      new Borne(2, 95, 80, 1)
-    ]),
-    new Station('Gare Lille Flandres', [
-      new Borne(5, 100, 100, 1),
-      new Borne(6, 90, 100, 1)
-    ])
-  ];
+  ngOnInit() {
+    this.getDataFromLocalStorage();
+  }
 
-  metroLine2B: Station[] = [
-    new Station('Mairie de Mons', [
-      new Borne(1, 100, 100, 1),
-      new Borne(2, 85, 90, 0)
-    ]),
-    new Station('Tourcoing C.H. Dron', [
-      new Borne(1, 100, 100, 1),
-      new Borne(2, 80, 80, 1)
-    ])
-  ];
+  constructor(private router: Router, private localStorageService: LocalStorageService) {}
 
-  constructor(private router: Router) { }
+  private getDataFromLocalStorage() {
+    const metroLines = this.localStorageService.getData('metroLinesData');
+
+    if (metroLines) {
+      this.metroLine1 = metroLines.metroLine1;
+      this.metroLine2A = metroLines.metroLine2A;
+      this.metroLine2B = metroLines.metroLine2B;
+    }
+  }
 
   getStationPosition(index: number, arrayLength: number): string {
     return (index / (arrayLength - 1)) * 100 + '%';
   }
 
-  onSelectStation(station: Station): void {
-    this.router.navigate(['/preview'], { queryParams: { stationData: JSON.stringify(station) } });
+  onSelectStation(station: StationClasse): void {
+    this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
   }
 }
