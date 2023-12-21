@@ -63,12 +63,18 @@ export class AppComponent implements OnInit {
   }
 
   private decrementBorneLevels() {
-    const inkDecrement = 5;
-    const paperDecrement = 3;
+    this.decrementForLine(this.metroLine1);
+    this.decrementForLine(this.metroLine2A);
+    this.decrementForLine(this.metroLine2B);
+  }
 
-    this.metroLine1.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
-    this.metroLine2A.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
-    this.metroLine2B.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
+  private decrementForLine(line: StationClasse[]) {
+    line.forEach(station => {
+      const inkDecrement = Math.floor(Math.random() * 10) + 1;
+      const paperDecrement = Math.floor(Math.random() * 10) + 1;
+
+      station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement));
+    });
   }
 
   private saveDataToLocalStorage() {
