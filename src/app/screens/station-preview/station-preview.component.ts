@@ -32,10 +32,8 @@ export class StationPreviewComponent implements OnInit {
     if (metroLines) {
       const allStations = [...metroLines.metroLine1, ...metroLines.metroLine2A, ...metroLines.metroLine2B];
       const selectedStation = allStations.find(station => station.name === stationName);
-
       return selectedStation;
     }
-
     return null;
   }
 

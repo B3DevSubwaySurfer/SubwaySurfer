@@ -5,5 +5,4 @@ export class BorneClasse {
         this.ink_level = Math.max(this.ink_level - inkDecrement, 0);
         this.paper_level = Math.max(this.paper_level - paperDecrement, 0);
     }
-
 }

@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService) {
     // Execute the function every 2 seconds
     setInterval(() => {
-      // this.initializeData();
       this.decrementBorneLevels();
       this.saveDataToLocalStorage();
     }, 1000);
@@ -63,16 +62,6 @@ export class AppComponent implements OnInit {
     ];
   }
 
-  private saveDataToLocalStorage() {
-    const metroLines = {
-      metroLine1: this.metroLine1,
-      metroLine2A: this.metroLine2A,
-      metroLine2B: this.metroLine2B,
-    };
-
-    this.localStorageService.saveData("metroLinesData", metroLines);
-  }
-
   private decrementBorneLevels() {
     const inkDecrement = 5;
     const paperDecrement = 3;
@@ -82,4 +71,13 @@ export class AppComponent implements OnInit {
     this.metroLine2B.forEach(station => station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement)));
   }
 
+  private saveDataToLocalStorage() {
+    const metroLines = {
+      metroLine1: this.metroLine1,
+      metroLine2A: this.metroLine2A,
+      metroLine2B: this.metroLine2B,
+    };
+
+    this.localStorageService.saveData("metroLinesData", metroLines);
+  }
 }
