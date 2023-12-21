@@ -7,11 +7,13 @@ import { HomeComponent } from './screens/home/home.component';
 import { StationComponent } from "./components/station/station.component";
 import {StationPreviewComponent } from "./screens/station-preview/station-preview.component";
 import {AppRoutingModule} from "./app-routing.module";
+import {LocalStorageService} from "../services/localstorage.service";
+import {AppService} from "../services/app.service";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent],
   imports: [BrowserModule, RouterOutlet, AppRoutingModule],
-  providers: [],
+  providers: [LocalStorageService, AppService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

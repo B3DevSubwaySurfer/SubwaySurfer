@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BorneClasse } from "../../../classes/borne.classe";
+import { AppService } from "../../../services/app.service";
 
 @Component({
   selector: 'app-station',
@@ -9,9 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 export class StationComponent implements OnInit {
   @Input() stationData!: any;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private appService: AppService) { }
 
   ngOnInit(): void {
-    console.log(this.stationData)
+    console.log(this.stationData);
+  }
+
+  resetInkLevel(borne: BorneClasse) {
+    this.appService.resetInkLevels();
   }
 }
