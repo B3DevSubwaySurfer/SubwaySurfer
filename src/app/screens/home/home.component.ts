@@ -9,6 +9,9 @@ import { StationClasse} from "../../../classes/station.classe";
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+
+  showAgents = 'hidden';
+
   constructor(public appService: AppService, private router: Router) {}
 
   getStationPosition(index: number, arrayLength: number): string {
@@ -30,4 +33,7 @@ export class HomeComponent {
     }
   }
 
+  toggleAgents() {
+    this.showAgents = this.showAgents === 'hidden' ? 'visible' : 'hidden';
+  }
 }

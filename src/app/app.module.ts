@@ -8,9 +8,10 @@ import { StationComponent } from "./components/station/station.component";
 import {StationPreviewComponent } from "./screens/station-preview/station-preview.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppService} from "../services/app.service";
+import { AgentsComponent } from './agents/agents.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent],
+  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent, AgentsComponent],
   imports: [BrowserModule, RouterOutlet, AppRoutingModule],
   providers: [AppService],
   bootstrap: [AppComponent],
