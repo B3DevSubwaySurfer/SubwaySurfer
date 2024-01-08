@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService} from "./localstorage.service";
 import { BorneClasse } from '../classes/borne.classe';
 import { StationClasse } from '../classes/station.classe';
 
@@ -12,11 +11,10 @@ export class AppService {
     metroLine2A: StationClasse[] = [];
     metroLine2B: StationClasse[] = [];
 
-    constructor(private localStorageService: LocalStorageService) {
-        // Execute the function every 2 seconds
+    constructor() {
+        // Execute the function every 5 seconds
         setInterval(() => {
             this.decrementBorneLevels();
-            this.saveDataToLocalStorage();
         }, 5000);
     }
 
@@ -308,6 +306,5 @@ export class AppService {
             metroLine2B: this.metroLine2B,
         };
 
-        this.localStorageService.saveData("metroLinesData", metroLines);
     }
 }
