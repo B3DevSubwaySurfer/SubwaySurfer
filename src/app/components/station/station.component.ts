@@ -20,4 +20,8 @@ export class StationComponent implements OnInit {
   resetInkLevel(borne: BorneClasse) {
     this.appService.resetInkLevelForBorne(borne);
   }
+
+  resetPaperLevel(borne: BorneClasse) {
+    this.appService.resetPaperLevelForBorne(borne);
+  }
 }

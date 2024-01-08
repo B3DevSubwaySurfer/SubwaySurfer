@@ -9,4 +9,8 @@ export class BorneClasse {
     resetLevels(inkResetValue: number) {
         this.ink_level = inkResetValue;
     }
+
+    resetLevelsPaper(paperResetValue: number) {
+        this.paper_level = paperResetValue;
+    }
 }

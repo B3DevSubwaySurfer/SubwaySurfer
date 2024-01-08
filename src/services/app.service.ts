@@ -296,6 +296,11 @@ export class AppService {
         this.saveDataToLocalStorage();
     }
 
+    public resetPaperLevelForBorne(borne: BorneClasse) {
+        borne.resetLevelsPaper(100);
+        this.saveDataToLocalStorage();
+    }
+
     private saveDataToLocalStorage() {
         const metroLines = {
             metroLine1: this.metroLine1,
