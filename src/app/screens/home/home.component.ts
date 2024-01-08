@@ -18,4 +18,16 @@ export class HomeComponent {
   onSelectStation(station: StationClasse): void {
     this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
   }
+  getStationInkStatus(station: StationClasse): string {
+    const lowestInkLevel = Math.min(...station.bornes.map(b => b.ink_level));
+
+    if (lowestInkLevel <= 10) {
+      return 'critical';
+    } else if (lowestInkLevel <= 50) {
+      return 'medium';
+    } else {
+      return 'normal';
+    }
+  }
+
 }

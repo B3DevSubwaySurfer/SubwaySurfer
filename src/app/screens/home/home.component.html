@@ -3,7 +3,11 @@
     <!-- Ligne 1 -->
     <div class="line line1">
         <div *ngFor="let station of appService.metroLine1; let i = index"
-             class="station"
+             [ngClass]="{
+                 'station': true,
+                 'station-medium-ink': getStationInkStatus(station) === 'medium',
+                 'station-critical-ink': getStationInkStatus(station) === 'critical'
+             }"
              (click)="onSelectStation(station)"
              [style.left]="getStationPosition(i, appService.metroLine1.length)"
              [attr.data-name]="station.name">
@@ -13,8 +17,11 @@
     <!-- Ligne 2A -->
     <div class="line line2 line2A">
         <div *ngFor="let station of appService.metroLine2A; let i = index"
-             class="station"
-             (click)="onSelectStation(station)"
+             [ngClass]="{
+                 'station': true,
+                 'station-medium-ink': getStationInkStatus(station) === 'medium',
+                 'station-critical-ink': getStationInkStatus(station) === 'critical'
+             }"             (click)="onSelectStation(station)"
              [style.left]="getStationPosition(i, appService.metroLine2A.length)"
              [attr.data-name]="station.name">
         </div>
@@ -23,8 +30,11 @@
     <!-- Ligne 2B -->
     <div class="line line2 line2B">
         <div *ngFor="let station of appService.metroLine2B; let i = index"
-             class="station"
-             (click)="onSelectStation(station)"
+             [ngClass]="{
+                 'station': true,
+                 'station-medium-ink': getStationInkStatus(station) === 'medium',
+                 'station-critical-ink': getStationInkStatus(station) === 'critical'
+             }"             (click)="onSelectStation(station)"
              [style.left]="getStationPosition(i, appService.metroLine2B.length)"
              [attr.data-name]="station.name">
         </div>
