@@ -14,6 +14,8 @@ export class HomeComponent {
 
   constructor(public appService: AppService, private router: Router) {}
 
+  selectedStation: string | null = null;  // Déclaration de la propriété
+
   getStationPosition(index: number, arrayLength: number): string {
     return (index / (arrayLength - 1)) * 100 + '%';
   }
