@@ -1,34 +1,44 @@
+<!-- home.component.html -->
 <div class="map-container">
     <!-- Ligne 1 -->
     <div class="line line1">
-        <div *ngFor="let station of metroLine1; let i = index"
-             class="station"
-             [class.selected]="isStationSelected(station)"
+        <div *ngFor="let station of appService.metroLine1; let i = index"
+             [ngClass]="{
+                 'station': true,
+                 'station-medium-ink': getStationInkStatus(station) === 'medium',
+                 'station-critical-ink': getStationInkStatus(station) === 'critical'
+             }"
              (click)="onSelectStation(station)"
-             [style.left]="getStationPosition(i, metroLine1.length)"
-             [attr.data-name]="station">
+             [style.left]="getStationPosition(i, appService.metroLine1.length)"
+             [attr.data-name]="station.name">
         </div>
     </div>
 
     <!-- Ligne 2A -->
     <div class="line line2 line2A">
-        <div *ngFor="let station of metroLine2A; let i = index"
-             class="station"
-             [class.selected]="isStationSelected(station)"
-             (click)="onSelectStation(station)"
-             [style.left]="getStationPosition(i, metroLine2A.length)"
-             [attr.data-name]="station">
+        <div *ngFor="let station of appService.metroLine2A; let i = index"
+             [ngClass]="{
+                 'station': true,
+                 'station-medium-ink': getStationInkStatus(station) === 'medium',
+                 'station-critical-ink': getStationInkStatus(station) === 'critical'
+             }"             (click)="onSelectStation(station)"
+             [style.left]="getStationPosition(i, appService.metroLine2A.length)"
+             [attr.data-name]="station.name">
         </div>
     </div>
 
     <!-- Ligne 2B -->
     <div class="line line2 line2B">
-        <div *ngFor="let station of metroLine2B; let i = index"
-             class="station"
-             [class.selected]="isStationSelected(station)"
-             (click)="onSelectStation(station)"
-             [style.left]="getStationPosition(i, metroLine2B.length)"
-             [attr.data-name]="station">
+        <div *ngFor="let station of appService.metroLine2B; let i = index"
+             [ngClass]="{
+                 'station': true,
+                 'station-medium-ink': getStationInkStatus(station) === 'medium',
+                 'station-critical-ink': getStationInkStatus(station) === 'critical'
+             }"             (click)="onSelectStation(station)"
+             [style.left]="getStationPosition(i, appService.metroLine2B.length)"
+             [attr.data-name]="station.name">
         </div>
     </div>
 </div>
+
+<app-agents class="agents-popup" [ngClass]="showAgents" (click)="toggleAgents()" (close)="showAgents = 'hidden'"></app-agents>

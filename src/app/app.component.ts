@@ -1,20 +1,15 @@
-import { Component } from "@angular/core";
-import { invoke } from "@tauri-apps/api/tauri";
+import { Component, OnInit } from '@angular/core';
+import { AppService} from "../services/app.service";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  greetingMessage = "";
+export class AppComponent implements OnInit {
+  constructor(private appService: AppService) {}
 
-  greet(event: SubmitEvent, name: string): void {
-    event.preventDefault();
-
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    invoke<string>("greet2", { name }).then((text) => {
-      this.greetingMessage = text;
-    });
+  ngOnInit() {
+    this.appService.initializeData();
   }
 }
