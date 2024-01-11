@@ -1,5 +1,38 @@
 .station {
     display: flex;
-    align-items: center;
     justify-content: space-around;
+}
+
+.borne {
+    background: #b3b2b2;
+    height: 500px;
+    padding: 0 10px;
+    border-radius: 10px;
+}
+
+.borne h2 {
+    width: 100%;
+    margin-top: 0;
+    padding: 10px 10px;
+    margin-left: -10px;
+    border-bottom: 2px solid black;
+    background: red;
+}
+
+.detail {
+    text-align: center;
+    height: calc(100% - 100px);
+    padding: 0 20px;
+}
+
+hr {
+    margin-top: auto;
+    height: 20px;
+    width: 100%;
+    padding: 10px 10px;
+    margin-left: -10px;
+    background: #686262;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
