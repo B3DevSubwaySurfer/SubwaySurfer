@@ -1,5 +1,7 @@
-import { BorneClasse} from "./borne.classe";
+import { BorneClasse } from "./borne.classe";
 
 export class StationClasse {
-    constructor(public name: string, public bornes: BorneClasse[]) {}
+  agent?: { name: string, photoUrl: string };
+  
+  constructor(public name: string, public bornes: BorneClasse[]) {}
 }

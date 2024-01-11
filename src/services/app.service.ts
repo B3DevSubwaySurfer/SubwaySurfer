@@ -18,6 +18,10 @@ export class AppService {
         }, 5000);
     }
 
+    getAllStations() {
+        return [...this.metroLine1, ...this.metroLine2A, ...this.metroLine2B];
+    }
+
     public initializeData() {
         this.metroLine1 = [
             new StationClasse("Lille CHU-Eurasanté", [
