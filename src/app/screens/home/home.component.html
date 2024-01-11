@@ -49,4 +49,4 @@
     </div>
 </div>
 
-<app-agents class="agents-popup" [ngClass]="showAgents" (click)="toggleAgents()" (close)="showAgents = 'hidden'" [selectedAgent]="selectedAgent"></app-agents>
+<app-agents class="agents-popup" [ngClass]="showAgents" (closePopupEvent)="showAgents = 'hidden'" [selectedAgent]="selectedAgent"></app-agents>

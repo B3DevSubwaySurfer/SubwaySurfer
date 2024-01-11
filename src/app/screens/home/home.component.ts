@@ -16,7 +16,7 @@ export class HomeComponent {
     { name: 'Vianney', photoUrl: 'url-to-agent-1-photo' },
     { name: 'Thibaut', photoUrl: 'url-to-agent-2-photo' },
     { name: 'Théotime', photoUrl: 'url-to-agent-3-photo' },
-    { name: 'Baptiste', photoUrl: 'url-to-agent-3-photo' },
+    { name: 'Baptiste', photoUrl: 'url-to-agent-4-photo' },
   ];
 
   selectedAgent: { name: string, photoUrl: string } | null; 
@@ -49,9 +49,5 @@ export class HomeComponent {
     } else {
       return 'normal';
     }
-  }
-
-  toggleAgents() {
-    this.showAgents = this.showAgents === 'hidden' ? 'visible' : 'hidden';
   }
 }
