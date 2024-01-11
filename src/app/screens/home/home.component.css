@@ -81,5 +81,25 @@
 }
 
 .agents-popup.hidden {
-    transform: translateY(calc(100% - 20px)); 
+    transform: translateY(calc(100%)); 
+}
+
+.agents-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.agent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 56px;
+    margin-top: 450px;
+}
+
+.agent img {
+    width: 50px;
+    height: 50px;
 }
