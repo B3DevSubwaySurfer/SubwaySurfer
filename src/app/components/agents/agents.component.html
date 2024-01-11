@@ -1,0 +1,12 @@
+<button (click)="closePopup()">X</button>
+
+<select (change)="updateSelectedStation($event)">
+    <option *ngFor="let station of stations">{{station.name}}</option>
+</select>
+
+<button (click)="assignStation()">Valider l'assignation</button>
+  
+<p>{{ selectedAgent?.name }} est assigné à {{ selectedStation?.name }}</p>
+<p>Status de l'agent : {{ selectedAgent?.status }}</p>
+<p class="error-message">{{ errorMessage }}</p>
+<p *ngIf="isAgentAssigned">Temps d'intervention restant : {{ interventionTime }} secondes</p>

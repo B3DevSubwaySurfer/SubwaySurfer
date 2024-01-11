@@ -11,6 +11,7 @@
              (click)="onSelectStation(station)"
              [style.left]="getStationPosition(i, appService.metroLine1.length)"
              [attr.data-name]="station.name">
+             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
     </div>
 
@@ -24,6 +25,7 @@
              }"             (click)="onSelectStation(station)"
              [style.left]="getStationPosition(i, appService.metroLine2A.length)"
              [attr.data-name]="station.name">
+             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
     </div>
 
@@ -37,6 +39,7 @@
              }"             (click)="onSelectStation(station)"
              [style.left]="getStationPosition(i, appService.metroLine2B.length)"
              [attr.data-name]="station.name">
+             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
     </div>
 </div>

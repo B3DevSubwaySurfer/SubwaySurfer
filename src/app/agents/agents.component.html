@@ -1,7 +1,0 @@
-<button (click)="closePopup()">X</button>
-
-<select (change)="updateSelectedStation($event)">
-    <option *ngFor="let station of stations">{{station.name}}</option>
-</select>
-  
-<p>{{ selectedAgent?.name }} est assigné à {{ selectedStation?.name }}</p>

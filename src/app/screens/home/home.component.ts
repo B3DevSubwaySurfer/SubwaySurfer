@@ -13,10 +13,10 @@ export class HomeComponent {
   showAgents = 'hidden';
 
   agents = [
-    { name: 'Vianney', photoUrl: 'url-to-agent-1-photo' },
-    { name: 'Thibaut', photoUrl: 'url-to-agent-2-photo' },
-    { name: 'Théotime', photoUrl: 'url-to-agent-3-photo' },
-    { name: 'Baptiste', photoUrl: 'url-to-agent-4-photo' },
+    { name: 'Vianney', photoUrl: 'url-to-agent-1-photo', status: 'Disponible' },
+    { name: 'Thibaut', photoUrl: 'url-to-agent-2-photo', status: 'Disponible' },
+    { name: 'Théotime', photoUrl: 'url-to-agent-3-photo', status: 'Disponible' },
+    { name: 'Baptiste', photoUrl: 'url-to-agent-4-photo', status: 'Disponible' },
   ];
 
   selectedAgent: { name: string, photoUrl: string } | null; 
