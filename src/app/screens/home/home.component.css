@@ -12,9 +12,20 @@
     left: 2.5%;
 }
 
-.line1 { top: 100px; background-color: #FFD700; }
-.line2A { top: 300px; background-color: #FF0000; }
-.line2B { top: 400px; background-color: #FF0000; }
+.line1 {
+    top: 100px;
+    background-color: #FFD700;
+}
+
+.line2A {
+    top: 300px;
+    background-color: #FF0000;
+}
+
+.line2B {
+    top: 400px;
+    background-color: #FF0000;
+}
 
 .station {
     position: absolute;
@@ -42,6 +53,7 @@
     overflow: hidden;
     line-height: 15px;
 }
+
 .station-low-ink {
     position: absolute;
     width: 20px;
@@ -51,8 +63,10 @@
     border-radius: 50%;
     border: 2px solid #000000;
     cursor: pointer;
-    background-color: #FF0000;;
+    background-color: #FF0000;
+    ;
 }
+
 .station-medium-ink {
     background-color: orange;
 }
@@ -61,42 +75,44 @@
     background-color: red;
 }
 
-.agents-popup {
+.burger-menu {
     position: fixed;
-    bottom: 0;
+    top: 0;
     right: 0;
-    min-width: 200px;
-    max-width: 90vw; 
-    max-height: 90vh;
+}
+
+.menu-content {
+    position: fixed;
+    bottom: 0; 
+    right: 0;
+    top: 0;
+    width: 400px;
+    max-height: 100vh;
     overflow: auto;
     background-color: black; 
-    border: 1px solid #ccc; 
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2); 
-    transition: transform 0.3s ease-in-out;
+    animation: slideInRight 0.5s forwards;
 }
 
-.agents-popup.visible {
-    transform: translateY(0);
+@keyframes slideInRight {
+    from {
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
 }
 
-.agents-popup.hidden {
-    transform: translateY(calc(100%)); 
+.menu-content h2 {
+    margin-left: 20px;
 }
 
-.agents-container {
+.menu-content .agent {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.agent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 56px;
-    margin-top: 450px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .agent img {

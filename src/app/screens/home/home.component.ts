@@ -19,10 +19,10 @@ export class HomeComponent {
     { name: 'Baptiste', photoUrl: 'url-to-agent-4-photo', status: 'Disponible' },
   ];
 
-  selectedAgent: { name: string, photoUrl: string } | null; 
+  selectedAgent: { name: string, photoUrl: string } | null;
 
   constructor(public appService: AppService, private router: Router) {
-    this.selectedAgent = null; 
+    this.selectedAgent = null;
   }
 
   onSelectAgent(agent: { name: string, photoUrl: string }) {
@@ -39,6 +39,7 @@ export class HomeComponent {
   onSelectStation(station: StationClasse): void {
     this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
   }
+  
   getStationInkStatus(station: StationClasse): string {
     const lowestInkLevel = Math.min(...station.bornes.map(b => b.ink_level));
 
@@ -49,5 +50,11 @@ export class HomeComponent {
     } else {
       return 'normal';
     }
+  }
+
+  showMenu = false;
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
 }

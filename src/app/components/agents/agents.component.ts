@@ -43,20 +43,22 @@ export class AgentsComponent implements OnInit {
       this.selectedAgent.status = 'Occupé';
       this.errorMessage = '';
   
-      // Définir un délai aléatoire entre 1 et 5 secondes
-      this.interventionTime = Math.floor(Math.random() * 5) + 1;
-      this.isAgentAssigned = true;
+      // Définir un délai aléatoire entre 1 et 5 minutes
+      this.selectedAgent.interventionTime = Math.floor(Math.random() * 5 * 60) + 1;
   
       // Mettre en place un timer pour remettre l'agent à l'état disponible
-      const intervalId = setInterval(() => {
-        this.interventionTime--;
-        if (this.interventionTime === 0) {
-          clearInterval(intervalId);
-          this.selectedAgent.status = 'Disponible';
-          this.isAgentAssigned = false;
-          this.selectedStation.agent = null; // Réinitialiser l'agent de la station
-        }
-      }, 1000);
+      // seulement si l'agent n'a pas déjà un intervalle en cours
+      if (!this.selectedAgent.intervalId) {
+        this.selectedAgent.intervalId = setInterval(() => {
+          this.selectedAgent.interventionTime--;
+          if (this.selectedAgent.interventionTime === 0) {
+            clearInterval(this.selectedAgent.intervalId);
+            this.selectedAgent.status = 'Disponible';
+            this.selectedStation.agent = null; // Réinitialiser l'agent de la station
+            this.selectedAgent.intervalId = null; // Réinitialiser l'ID de l'intervalle de l'agent
+          }
+        }, 1000);
+      }
     } else {
       this.errorMessage = "L'agent est déjà assigné à une autre station";
     }
