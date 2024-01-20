@@ -8,4 +8,4 @@ This template should help get you started developing with Tauri and Angular.
 
 ## start project
 
-npm run tauri dev
+npm run tauri
