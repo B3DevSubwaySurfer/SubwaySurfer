@@ -1,0 +1,13 @@
+.container {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.container select {
+    margin: 20px;
+}
+
+.container button {
+    width: 200px;
+    margin-left: 90px;
+}
