@@ -1,6 +1,9 @@
 <!-- home.component.html -->
 <h1 style="text-align: center;">Bienvenue dans le métro de Lille !</h1>
 <button class="burger-menu" (click)="toggleMenu()">☰</button>
+
+<app-popup-probleme *ngIf="showPopup" (closePopup)="showPopup = false"></app-popup-probleme>
+
 <div class="map-container">
     <!-- Ligne 1 -->
     <div class="line line1">
@@ -45,7 +48,7 @@
     <div *ngFor="let agent of agents; let i = index" class="agent">
         <img [src]="agent.photoUrl" alt="Photo de l'agent">
         <p>{{ agent.name }}</p>
-        <button (click)="onSelectAgent(agent)">Assigner</button>
+        <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
     </div>
     <app-agents class= "assigner" [ngClass]="showAgents"
     [selectedAgent]="selectedAgent"></app-agents>
