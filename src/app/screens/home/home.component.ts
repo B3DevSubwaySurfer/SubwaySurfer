@@ -39,7 +39,7 @@ export class HomeComponent {
   onSelectStation(station: StationClasse): void {
     this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
   }
-  
+
   getStationInkStatus(station: StationClasse): string {
     const lowestInkLevel = Math.min(...station.bornes.map(b => b.ink_level));
 
@@ -56,5 +56,34 @@ export class HomeComponent {
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
+  }
+
+  showPopup = false;
+  popupInterval: any;
+
+  showProblemPopup() {
+    this.showPopup = true;
+  }
+
+  ngOnInit() {
+    this.schedulePopup();
+  }
+  
+  schedulePopup() {
+    // Generate a random time between 1 and 5 minutes
+    const time = Math.random() * (5 - 1) + 1; // time in minutes
+    // const timeInMs = time * 1000; // convert time to milliseconds
+    const timeInMs = time * 60 * 1000; // convert time to milliseconds
+  
+    this.popupInterval = setTimeout(() => {
+      this.showProblemPopup();
+      this.schedulePopup(); // schedule the next popup
+    }, timeInMs);
+  }
+
+  ngOnDestroy() {
+    if (this.popupInterval) {
+      clearTimeout(this.popupInterval);
+    }
   }
 }

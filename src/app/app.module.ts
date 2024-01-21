@@ -9,9 +9,10 @@ import {StationPreviewComponent } from "./screens/station-preview/station-previe
 import {AppRoutingModule} from "./app-routing.module";
 import {AppService} from "../services/app.service";
 import { AgentsComponent } from './components/agents/agents.component';
+import { PopupProblemeComponent } from './components/popup-probleme/popup-probleme.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent, AgentsComponent],
+  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent, AgentsComponent, PopupProblemeComponent],
   imports: [BrowserModule, RouterOutlet, AppRoutingModule],
   providers: [AppService],
   bootstrap: [AppComponent],
