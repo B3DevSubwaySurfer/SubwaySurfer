@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from "../../../services/app.service";
 import { StationClasse } from "../../../classes/station.classe";
@@ -11,6 +11,14 @@ import { StationClasse } from "../../../classes/station.classe";
 export class HomeComponent {
 
   showAgents = 'hidden';
+  stations: StationClasse[] = [];
+
+  ngOnInit() {
+    this.appService.getStations().then(stations => {
+      this.stations = stations;
+      console.log(stations);
+    });
+  }
 
   agents = [
     { name: 'Vianney', photoUrl: 'url-to-agent-1-photo', status: 'Disponible' },
@@ -65,9 +73,9 @@ export class HomeComponent {
     this.showPopup = true;
   }
 
-  ngOnInit() {
-    this.schedulePopup();
-  }
+  // ngOnInit() {
+  //   this.schedulePopup();
+  // }
   
   schedulePopup() {
     // Generate a random time between 1 and 5 minutes

@@ -53,3 +53,10 @@
     <app-agents class= "assigner" [ngClass]="showAgents"
     [selectedAgent]="selectedAgent"></app-agents>
 </div>
+
+
+<ul>
+    <li *ngFor="let station of stations">
+      {{ station.name }}
+    </li>
+</ul>

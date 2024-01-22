@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BorneClasse } from '../classes/borne.classe';
 import { StationClasse } from '../classes/station.classe';
+import { invoke } from '@tauri-apps/api/tauri'
+
+interface StationData {
+    name: string;
+    bornes: any[]; // Replace `any` with the actual type of `bornes` if known
+  }
 
 @Injectable({
     providedIn: 'root',
@@ -21,6 +27,17 @@ export class AppService {
     getAllStations() {
         return [...this.metroLine1, ...this.metroLine2A, ...this.metroLine2B];
     }
+
+    getStations(): Promise<StationClasse[]> {
+        return invoke<StationData[]>('get_stations')
+          .then(data => {
+            return data.map((station: StationData) => new StationClasse(station.name, station.bornes));
+          })
+          .catch(error => {
+            console.error(error);
+            return [];
+          });
+      }
 
     public initializeData() {
         this.metroLine1 = [
