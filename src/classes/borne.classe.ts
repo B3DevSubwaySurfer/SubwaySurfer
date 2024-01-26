@@ -1,16 +1,16 @@
 export class BorneClasse {
-    constructor(public id: number, public ink_level: number, public paper_level: number) {}
-
+    constructor(public id: number, public station_id: number, public level: number, public max_level: number) {}
+  
     decrementLevels(inkDecrement: number, paperDecrement: number) {
-        this.ink_level = Math.max(this.ink_level - inkDecrement, 0);
-        this.paper_level = Math.max(this.paper_level - paperDecrement, 0);
+        this.level = Math.max(this.level - inkDecrement, 0);
+        this.max_level = Math.max(this.max_level - paperDecrement, 0);
     }
-
-    resetLevels(inkResetValue: number) {
-        this.ink_level = inkResetValue;
+  
+    resetLevels(resetValue: number) {
+      this.level = resetValue;
     }
-
-    resetLevelsPaper(paperResetValue: number) {
-        this.paper_level = paperResetValue;
+  
+    resetMaxLevels(resetValue: number) {
+      this.max_level = resetValue;
     }
-}
+  }

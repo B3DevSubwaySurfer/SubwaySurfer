@@ -12,12 +12,25 @@ export class HomeComponent {
 
   showAgents = 'hidden';
   stations: StationClasse[] = [];
-
+  metroLines: { [key: string]: StationClasse[] } = {};
+  
   ngOnInit() {
+    this.schedulePopup();
     this.appService.getStations().then(stations => {
       this.stations = stations;
+      this.groupStationsByLine();
       console.log(stations);
     });
+  }
+
+  groupStationsByLine() {
+    for (let station of this.stations) {
+      const lineName = station.metroLine.name;
+      if (!this.metroLines[lineName]) {
+        this.metroLines[lineName] = [];
+      }
+      this.metroLines[lineName].push(station);
+    }
   }
 
   agents = [
@@ -37,27 +50,42 @@ export class HomeComponent {
     this.selectedAgent = agent;
     this.showAgents = 'visible';
   }
-
+  
   selectedStation: string | null = null;  // Déclaration de la propriété
-
+  
   getStationPosition(index: number, arrayLength: number): string {
     return (index / (arrayLength - 1)) * 100 + '%';
   }
 
   onSelectStation(station: StationClasse): void {
-    this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
+        this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
   }
 
   getStationInkStatus(station: StationClasse): string {
-    const lowestInkLevel = Math.min(...station.bornes.map(b => b.ink_level));
-
-    if (lowestInkLevel <= 10) {
-      return 'critical';
-    } else if (lowestInkLevel <= 50) {
-      return 'medium';
-    } else {
-      return 'normal';
-    }
+    // const stationBornes = this.bornes.filter(borne => borne.station_id === station.id);
+    return 'normal';
+  
+    // if (stationBornes.length === 0) {
+    //   console.error('Station has no bornes:', station);
+    //   return 'normal';
+    // }
+  
+    // const inkLevels = stationBornes.map(borne => borne.level).filter(Number.isFinite);
+  
+    // if (inkLevels.length === 0) {
+    //   console.error('Station has no valid ink levels:', station);
+    //   return 'normal';
+    // }
+  
+    // const lowestInkLevel = Math.min(...inkLevels);
+  
+    // if (lowestInkLevel <= 10) {
+    //   return 'critical';
+    // } else if (lowestInkLevel <= 50) {
+    //   return 'medium';
+    // } else {
+    //   return 'normal';
+    // }
   }
 
   showMenu = false;
@@ -72,10 +100,6 @@ export class HomeComponent {
   showProblemPopup() {
     this.showPopup = true;
   }
-
-  // ngOnInit() {
-  //   this.schedulePopup();
-  // }
   
   schedulePopup() {
     // Generate a random time between 1 and 5 minutes
