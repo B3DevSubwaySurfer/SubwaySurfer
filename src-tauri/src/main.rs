@@ -7,7 +7,6 @@ mod server;
 // Cette ligne importe la fonction `get_stations` du module `server`.
 use server::get_bornes;
 use server::get_stations;
-use server::get_metro_lines;
 
 // La fonction `main` est le point d'entrée de notre application.
 pub fn main() -> std::io::Result<()> {

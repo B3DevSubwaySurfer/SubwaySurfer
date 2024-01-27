@@ -53,14 +53,3 @@ pub async fn get_bornes() -> Vec<Borne> {
 
     result
 }
-
-#[tauri::command]
-pub async fn get_metro_lines() -> Vec<MetroLine> {
-    let mut conn = POOL.get_conn().unwrap();
-    let result: Vec<MetroLine> = conn.query_map(
-        "SELECT id, name FROM metro_lines",
-        |(id, name)| MetroLine { id, name },
-    ).unwrap();
-
-    result
-}
