@@ -49,5 +49,5 @@
             <p>{{ agent.name }}</p>
             <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
         </div>
-        <app-agents class="assigner" [ngClass]="showAgents" [selectedAgent]="selectedAgent"></app-agents>
+        <app-agents (agentAssigned)="onAgentAssigned($event)" [selectedAgent]="selectedAgent" (closePopupEvent)="hideAgents()"></app-agents>
     </div>

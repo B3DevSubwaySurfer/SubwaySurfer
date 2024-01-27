@@ -8,6 +8,7 @@ import { AppService } from "../../../services/app.service";
 })
 export class AgentsComponent implements OnInit {
   @Input() selectedAgent: any;
+  @Output() agentAssigned = new EventEmitter<{ stationId: number, agent: any }>();
   @Output() closePopupEvent = new EventEmitter<void>();
   stations: any[] = [];
   selectedStation: any;
@@ -23,7 +24,9 @@ export class AgentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.stations = this.appService.getAllStations();
+    this.appService.getStations().then(stations => {
+      this.stations = stations;
+    });
   }
 
   assignAgent() {
@@ -42,10 +45,13 @@ export class AgentsComponent implements OnInit {
       this.selectedStation.agent = this.selectedAgent;
       this.selectedAgent.status = 'Occupé';
       this.errorMessage = '';
-  
+
+      // Émettez l'événement ici, après avoir assigné l'agent à la station
+      this.agentAssigned.emit(this.selectedStation);
+
       // Définir un délai aléatoire entre 1 et 5 minutes
       this.selectedAgent.interventionTime = Math.floor(Math.random() * 5 * 60) + 1;
-  
+
       // Mettre en place un timer pour remettre l'agent à l'état disponible
       // seulement si l'agent n'a pas déjà un intervalle en cours
       if (!this.selectedAgent.intervalId) {

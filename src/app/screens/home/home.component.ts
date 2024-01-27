@@ -13,7 +13,16 @@ export class HomeComponent {
   showAgents = 'hidden';
   stations: StationClasse[] = [];
   metroLines: { [key: string]: StationClasse[] } = {};
-  
+  selectedAgent: { name: string, photoUrl: string } | null;
+  selectedStation: string | null = null;
+  showMenu = false;
+  showPopup = false;
+  popupInterval: any;
+
+  constructor(public appService: AppService, private router: Router) {
+    this.selectedAgent = null;
+  }
+
   ngOnInit() {
     this.schedulePopup();
     this.appService.getStations().then(stations => {
@@ -40,26 +49,44 @@ export class HomeComponent {
     { name: 'Baptiste', photoUrl: 'url-to-agent-4-photo', status: 'Disponible' },
   ];
 
-  selectedAgent: { name: string, photoUrl: string } | null;
+  onSelectStation(station: StationClasse): void {
+    this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
+  }
 
-  constructor(public appService: AppService, private router: Router) {
-    this.selectedAgent = null;
+  getStationPosition(index: number, arrayLength: number): string {
+    return (index / (arrayLength - 1)) * 100 + '%';
   }
 
   onSelectAgent(agent: { name: string, photoUrl: string }) {
     this.selectedAgent = agent;
     this.showAgents = 'visible';
-  }
   
-  selectedStation: string | null = null;  // Déclaration de la propriété
-  
-  getStationPosition(index: number, arrayLength: number): string {
-    return (index / (arrayLength - 1)) * 100 + '%';
+    // Assign the agent to the selected station
+    if (this.selectedStation) {
+      let stationId = Number(this.selectedStation);
+      for (let line in this.metroLines) {
+        let station = this.metroLines[line].find(station => station.id === stationId);
+        if (station) {
+          station.agent = agent;
+          break;
+        }
+      }
+    }
   }
 
-  onSelectStation(station: StationClasse): void {
-        this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
+  onAgentAssigned(updatedStation: any) {
+    for (let line in this.metroLines) {
+      let stationIndex = this.metroLines[line].findIndex(station => station.id === updatedStation.id);
+      if (stationIndex !== -1) {
+        this.metroLines[line][stationIndex] = updatedStation;
+        break;
+      }
+    }
   }
+
+  hideAgents() {
+    this.showAgents = 'hidden';
+  } 
 
   getStationInkStatus(station: StationClasse): string {
     // const stationBornes = this.bornes.filter(borne => borne.station_id === station.id);
@@ -88,14 +115,9 @@ export class HomeComponent {
     // }
   }
 
-  showMenu = false;
-
   toggleMenu() {
     this.showMenu = !this.showMenu;
   }
-
-  showPopup = false;
-  popupInterval: any;
 
   showProblemPopup() {
     this.showPopup = true;

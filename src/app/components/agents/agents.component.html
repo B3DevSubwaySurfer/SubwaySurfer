@@ -2,7 +2,7 @@
     <p>{{ selectedAgent?.name }}</p>
 
     <select (change)="updateSelectedStation($event)">
-        <option *ngFor="let station of stations">{{station.name}}</option>
+        <option *ngFor="let station of stations" [value]="station.id">{{station.name}}</option>
     </select>
 
     <button (click)="assignStation()">Valider</button>
