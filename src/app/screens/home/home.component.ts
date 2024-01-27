@@ -15,6 +15,7 @@ export class HomeComponent {
   metroLines: { [key: string]: StationClasse[] } = {};
   selectedAgent: { name: string, photoUrl: string } | null;
   selectedStation: string | null = null;
+  bornes: any[] = [];
   showMenu = false;
   showPopup = false;
   popupInterval: any;
@@ -90,7 +91,7 @@ export class HomeComponent {
 
   getStationInkStatus(station: StationClasse): string {
     // const stationBornes = this.bornes.filter(borne => borne.station_id === station.id);
-    return 'normal';
+      return 'normal';
   
     // if (stationBornes.length === 0) {
     //   console.error('Station has no bornes:', station);

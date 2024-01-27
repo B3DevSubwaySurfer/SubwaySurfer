@@ -38,7 +38,7 @@ export class AppService {
   constructor() {
     // Execute the function every 5 seconds
     setInterval(() => {
-      this.decrementBorneLevels();
+      this.decrementAllBorneLevels();
     }, 5000);
   }
 
@@ -84,21 +84,6 @@ export class AppService {
     return this.selectedBornes;
   }
 
-  private decrementBorneLevels() {
-    this.decrementForLine(this.metroLine1);
-    this.decrementForLine(this.metroLine2A);
-    this.decrementForLine(this.metroLine2B);
-  }
-
-  private decrementForLine(line: StationClasse[]) {
-    line.forEach(station => {
-      const inkDecrement = Math.floor(Math.random() * 10) + 1;
-      const paperDecrement = Math.floor(Math.random() * 10) + 1;
-
-      station.bornes.forEach(borne => borne.decrementLevels(inkDecrement, paperDecrement));
-    });
-  }
-
   public resetInkLevelForBorne(borne: BorneClasse) {
     borne.resetLevels(100);
     this.saveDataToLocalStorage();
@@ -115,5 +100,20 @@ export class AppService {
       metroLine2A: this.metroLine2A,
       metroLine2B: this.metroLine2B,
     };
+  }
+
+  public decrementAllBorneLevels(): void {
+    this.getStations().then(stations => {
+      stations.forEach(station => {
+        this.getBornes().then(bornes => {
+          const stationBornes = bornes.filter(borne => borne.station_id === station.id);
+          stationBornes.forEach(borne => {
+            const inkDecrement = Math.floor(Math.random() * 10) + 1;
+            const paperDecrement = Math.floor(Math.random() * 10) + 1;
+            borne.decrementLevels(inkDecrement, paperDecrement);
+          });
+        });
+      });
+    });
   }
 }
