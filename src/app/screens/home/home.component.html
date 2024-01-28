@@ -8,10 +8,10 @@
     <!-- Ligne 1 -->
     <div class="line line1">
         <div *ngFor="let station of metroLines['MetroLine1']; let i = index" [ngClass]="{
-             'station': true,
-             'station-medium-ink': getStationInkStatus(station) === 'medium',
-             'station-critical-ink': getStationInkStatus(station) === 'critical'
-         }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine1'].length)"
+            'station': true,
+            'station-medium-ink': stationInkStatuses[station.id] === 'medium',
+            'station-critical-ink': stationInkStatuses[station.id] === 'critical'
+        }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine1'].length)"
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
@@ -21,8 +21,8 @@
     <div class="line line2 line2A">
         <div *ngFor="let station of metroLines['MetroLine2A']; let i = index" [ngClass]="{
              'station': true,
-             'station-medium-ink': getStationInkStatus(station) === 'medium',
-             'station-critical-ink': getStationInkStatus(station) === 'critical'
+             'station-medium-ink': stationInkStatuses[station.id] === 'medium',
+     'station-critical-ink': stationInkStatuses[station.id] === 'critical'
          }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine2A'].length)"
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
@@ -33,8 +33,8 @@
     <div class="line line2 line2B">
         <div *ngFor="let station of metroLines['MetroLine2B']; let i = index" [ngClass]="{
              'station': true,
-             'station-medium-ink': getStationInkStatus(station) === 'medium',
-             'station-critical-ink': getStationInkStatus(station) === 'critical'
+             'station-medium-ink': stationInkStatuses[station.id] === 'medium',
+     'station-critical-ink': stationInkStatuses[station.id] === 'critical'
          }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine2B'].length)"
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
@@ -49,5 +49,6 @@
             <p>{{ agent.name }}</p>
             <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
         </div>
-        <app-agents (agentAssigned)="onAgentAssigned($event)" [selectedAgent]="selectedAgent" (closePopupEvent)="hideAgents()"></app-agents>
+        <app-agents (agentAssigned)="onAgentAssigned($event)" [selectedAgent]="selectedAgent"
+            (closePopupEvent)="hideAgents()"></app-agents>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from "../../../services/app.service";
 import { StationClasse } from "../../../classes/station.classe";
@@ -26,10 +26,25 @@ export class HomeComponent {
 
   ngOnInit() {
     this.schedulePopup();
-    this.appService.getStations().then(stations => {
+    this.appService.getStations().then(async (stations) => {
       this.stations = stations;
       this.groupStationsByLine();
-      console.log(stations);
+    
+      // Mettez à jour le statut d'encre pour chaque station une fois au début
+      for (const lineName in this.metroLines) {
+        for (const station of this.metroLines[lineName]) {
+          await this.updateStationInkStatus(station);
+        }
+      }
+  
+      // Permet de Mettre à jour le statut d'encre pour chaque station à intervalles réguliers
+      setInterval(async () => {
+        for (const lineName in this.metroLines) {
+          for (const station of this.metroLines[lineName]) {
+            await this.updateStationInkStatus(station);
+          }
+        }
+      }, 5000);
     });
   }
 
@@ -61,7 +76,7 @@ export class HomeComponent {
   onSelectAgent(agent: { name: string, photoUrl: string }) {
     this.selectedAgent = agent;
     this.showAgents = 'visible';
-  
+
     // Assign the agent to the selected station
     if (this.selectedStation) {
       let stationId = Number(this.selectedStation);
@@ -87,33 +102,34 @@ export class HomeComponent {
 
   hideAgents() {
     this.showAgents = 'hidden';
-  } 
+  }
 
-  getStationInkStatus(station: StationClasse): string {
-    // const stationBornes = this.bornes.filter(borne => borne.station_id === station.id);
-      return 'normal';
-  
-    // if (stationBornes.length === 0) {
-    //   console.error('Station has no bornes:', station);
-    //   return 'normal';
-    // }
-  
-    // const inkLevels = stationBornes.map(borne => borne.level).filter(Number.isFinite);
-  
-    // if (inkLevels.length === 0) {
-    //   console.error('Station has no valid ink levels:', station);
-    //   return 'normal';
-    // }
-  
-    // const lowestInkLevel = Math.min(...inkLevels);
-  
-    // if (lowestInkLevel <= 10) {
-    //   return 'critical';
-    // } else if (lowestInkLevel <= 50) {
-    //   return 'medium';
-    // } else {
-    //   return 'normal';
-    // }
+  stationInkStatuses: { [stationId: number]: string } = {};
+
+  async updateStationInkStatus(station: StationClasse): Promise<void> {
+    // Récupérez les bornes de la station
+    const allBornes = await this.appService.getBornes();
+    const stationBornes = allBornes.filter(borne => borne.station_id === station.id);
+
+    // Calculez le niveau moyen d'encre de toutes les bornes de la station
+    const averageInkLevel = stationBornes.reduce((sum, borne) => sum + borne.level, 0) / stationBornes.length;
+
+    // Définissions des seuils pour les niveaux d'encre 'medium' et 'critical'
+    const mediumThreshold = 50; 
+    const criticalThreshold = 20; 
+
+    // Déterminez le statut en fonction du niveau moyen d'encre
+    let status;
+    if (averageInkLevel <= criticalThreshold) {
+      status = 'critical';
+    } else if (averageInkLevel <= mediumThreshold) {
+      status = 'medium';
+    } else {
+      status = 'normal';
+    }
+
+    // Mettez à jour le statut d'encre de la station
+    this.stationInkStatuses[station.id] = status;
   }
 
   toggleMenu() {
@@ -123,13 +139,13 @@ export class HomeComponent {
   showProblemPopup() {
     this.showPopup = true;
   }
-  
+
   schedulePopup() {
     // Generate a random time between 1 and 5 minutes
     const time = Math.random() * (5 - 1) + 1; // time in minutes
     // const timeInMs = time * 1000; // convert time to milliseconds
     const timeInMs = time * 60 * 1000; // convert time to milliseconds
-  
+
     this.popupInterval = setTimeout(() => {
       this.showProblemPopup();
       this.schedulePopup(); // schedule the next popup
