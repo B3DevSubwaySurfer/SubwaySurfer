@@ -12,9 +12,12 @@ pub static POOL: Lazy<Pool> = Lazy::new(|| {
 
 // Cette fonction crée la base de données "subwaysurfer" si elle n'existe pas déjà.
 pub fn create_database() -> std::result::Result<(), mysql::Error> {
-     let mut conn = POOL.get_conn()?;
+    let mut conn = POOL.get_conn()?;
     conn.query_drop(
         r"CREATE DATABASE IF NOT EXISTS subwaysurfer"
+    )?;
+    conn.query_drop(
+        r"USE subwaysurfer"
     )?;
     Ok(())
 }
