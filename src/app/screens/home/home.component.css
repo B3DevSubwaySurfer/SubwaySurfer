@@ -41,7 +41,13 @@
     text-align: center;
     overflow: hidden;
     line-height: 15px;
+    transition: all 0.3s ease;
 }
+
+.station:hover::after {
+    font-size: 12px;
+}
+
 .station-low-ink {
     position: absolute;
     width: 20px;
@@ -59,4 +65,47 @@
 
 .station-critical-ink {
     background-color: red;
+}
+
+.metro {
+    position: absolute;
+    top: 50%;
+    width: 80px;
+    height: 10px;
+    background-color: #555;
+    border-radius: 10px;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    border: 2px solid #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: moveTrain 60s linear infinite;
+}
+
+.metro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 2px;
+    background-color: #333;
+}
+
+.metro::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 10px;
+    height: 5px;
+    background-color: #fff;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    box-shadow: 50px 0 0 #fff;
+}
+
+@keyframes moveTrain {
+    0% { left: 0; }
+    50% { left: 95%; }
+    100% { left: 0; }
 }
