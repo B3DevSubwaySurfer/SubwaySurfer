@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from "../../../services/app.service";
 import { StationClasse } from "../../../classes/station.classe";
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent {
   showPopup = false;
   popupInterval: any;
 
-  constructor(public appService: AppService, private router: Router) {
+  constructor(public appService: AppService, private router: Router, private notificationService: NotificationService) {
     this.selectedAgent = null;
   }
 
@@ -29,14 +30,14 @@ export class HomeComponent {
     this.appService.getStations().then(async (stations) => {
       this.stations = stations;
       this.groupStationsByLine();
-    
+
       // Mettez à jour le statut d'encre pour chaque station une fois au début
       for (const lineName in this.metroLines) {
         for (const station of this.metroLines[lineName]) {
           await this.updateStationInkStatus(station);
         }
       }
-  
+
       // Permet de Mettre à jour le statut d'encre pour chaque station à intervalles réguliers
       setInterval(async () => {
         for (const lineName in this.metroLines) {
@@ -115,8 +116,8 @@ export class HomeComponent {
     const averageInkLevel = stationBornes.reduce((sum, borne) => sum + borne.level, 0) / stationBornes.length;
 
     // Définissions des seuils pour les niveaux d'encre 'medium' et 'critical'
-    const mediumThreshold = 50; 
-    const criticalThreshold = 20; 
+    const mediumThreshold = 50;
+    const criticalThreshold = 20;
 
     // Déterminez le statut en fonction du niveau moyen d'encre
     let status;
@@ -156,5 +157,26 @@ export class HomeComponent {
     if (this.popupInterval) {
       clearTimeout(this.popupInterval);
     }
+  }
+
+  notifications: string[] = [];
+
+  showNotifications() {
+    this.notifications = this.notificationService.getNotifications();
+    const notificationMenu = document.querySelector('.notification-menu');
+    if(notificationMenu) {
+      notificationMenu.classList.add('show');
+    }
+  }
+  
+  hideNotifications() {
+    const notificationMenu = document.querySelector('.notification-menu');
+    if(notificationMenu) {
+      notificationMenu.classList.remove('show');
+    }
+  }
+
+  removeNotification(index: number) {
+    this.notifications.splice(index, 1);
   }
 }
