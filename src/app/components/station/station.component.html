@@ -4,9 +4,9 @@
         <h3>Borne {{ borne.id }}</h3>
         <p>Ink Level: {{ borne.ink_level }}</p>
         <p>Paper Level: {{ borne.paper_level }}</p>
-        <button (click)="resetInkLevel(borne)">Reset Ink Level</button>
-        <br />
-        <button (click)="resetPaperLevel(borne)">Reset Paper Level</button>
-
+        <button (click)="goToInkLevelGame(borne)">Reset Ink Level</button>
+        <br/>
+        <br>
+        <button (click)="gotToPaperLevelGame(borne)">Reset Paper Level</button>
     </div>
 </div>

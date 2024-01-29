@@ -1,6 +1,6 @@
-  import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { BorneClasse } from "../../../classes/borne.classe";
+import { Router } from '@angular/router';
 import { AppService } from "../../../services/app.service";
 
 @Component({
@@ -10,18 +10,22 @@ import { AppService } from "../../../services/app.service";
 })
 export class StationComponent implements OnInit {
   @Input() stationData!: any;
+  private gameCompletionCheckService: any;
 
-  constructor(private route: ActivatedRoute, private appService: AppService) { }
+  constructor(private appService: AppService, private router: Router) { }
 
   ngOnInit(): void {
     console.log(this.stationData);
   }
 
-  resetInkLevel(borne: BorneClasse) {
-    this.appService.resetInkLevelForBorne(borne);
+  goToInkLevelGame(borne: BorneClasse) {
+    this.router.navigate(['/ink-level-game'], { queryParams: { borne: JSON.stringify(borne) } });
   }
 
-  resetPaperLevel(borne: BorneClasse) {
+
+
+  gotToPaperLevelGame(borne: BorneClasse) {
+    this.router.navigate(['/paper-level-game']);
     this.appService.resetPaperLevelForBorne(borne);
   }
 }

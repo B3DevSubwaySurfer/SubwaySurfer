@@ -8,9 +8,10 @@ import { StationComponent } from "./components/station/station.component";
 import {StationPreviewComponent } from "./screens/station-preview/station-preview.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppService} from "../services/app.service";
+import { InkLevelGameComponent } from './screens/ink-level-game/ink-level-game.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent],
+  declarations: [AppComponent, HomeComponent, StationComponent, StationPreviewComponent, InkLevelGameComponent],
   imports: [BrowserModule, RouterOutlet, AppRoutingModule],
   providers: [AppService],
   bootstrap: [AppComponent],

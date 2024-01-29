@@ -290,21 +290,10 @@ export class AppService {
     }
 
     public resetInkLevelForBorne(borne: BorneClasse) {
-        borne.resetLevels(100);
-        this.saveDataToLocalStorage();
+        borne.resetInkLevels(100);
     }
 
     public resetPaperLevelForBorne(borne: BorneClasse) {
-        borne.resetLevelsPaper(100);
-        this.saveDataToLocalStorage();
-    }
-
-    private saveDataToLocalStorage() {
-        const metroLines = {
-            metroLine1: this.metroLine1,
-            metroLine2A: this.metroLine2A,
-            metroLine2B: this.metroLine2B,
-        };
-
+        borne.resetPaperLevels(100);
     }
 }
