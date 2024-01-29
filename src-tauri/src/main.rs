@@ -12,7 +12,7 @@ use server::get_stations;
 pub fn main() -> std::io::Result<()> {
     // Ces lignes appellent les fonctions du module `db` pour créer la base de données et les tables.
     db::create_database().expect("Failed to create database");
-    db::create_metro_lines_table().expect("Failed to create metro lines table"); // Nouvelle ligne
+    db::create_metro_lines_table().expect("Failed to create metro lines table"); 
     db::create_stations_table().expect("Failed to create stations table");
     db::create_bornes_table().expect("Failed to create bornes table");
 
