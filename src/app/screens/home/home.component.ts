@@ -60,10 +60,10 @@ export class HomeComponent {
   }
 
   agents = [
-    { name: 'Vianney', photoUrl: '../../../assets/Theotime.jpeg', status: 'Disponible' },
-    { name: 'Thibaut', photoUrl: '../../../assets/Theotime.jpeg', status: 'Disponible' },
+    { name: 'Vianney', photoUrl: '../../../assets/vianney.jpeg', status: 'Disponible' },
+    { name: 'Thibaut', photoUrl: '../../../assets/thibaut.jpeg', status: 'Disponible' },
     { name: 'Théotime', photoUrl: '../../../assets/Theotime.jpeg', status: 'Disponible' },
-    { name: 'Baptiste', photoUrl: '../../../assets/Theotime.jpeg', status: 'Disponible' },
+    { name: 'Baptiste', photoUrl: '../../../assets/baptiste.jpeg', status: 'Disponible' },
   ];
 
   onSelectStation(station: StationClasse): void {
