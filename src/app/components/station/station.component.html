@@ -1,12 +1,19 @@
 <h1>{{ stationData.name }}</h1>
 <div class="station">
-    <div *ngFor="let borne of stationData.bornes">
-        <h3>Borne {{ borne.id }}</h3>
-        <p>Ink Level: {{ borne.ink_level }}</p>
-        <p>Paper Level: {{ borne.paper_level }}</p>
-        <button (click)="goToInkLevelGame(borne)">Reset Ink Level</button>
-        <br/>
-        <br>
-        <button (click)="gotToPaperLevelGame(borne)">Reset Paper Level</button>
+
+    <div class="borne" *ngFor="let borne of stationData.bornes">
+        <h2>TICKETS / RECHARGEMENT</h2>
+        <div class="detail">
+            <p class="borne_id">Borne {{ borne.id }} :</p>
+            <div class="screen">
+                <p>Ink Level: {{ borne.ink_level }}</p>
+                <p>Paper Level: {{ borne.paper_level }}</p>
+            </div>
+            <div class="buttons">
+                <button (click)="resetInkLevel(borne)">Reset Ink Level</button>
+                <button (click)="resetPaperLevel(borne)">Reset Paper Level</button>
+            </div>
+        </div>
+        <hr>
     </div>
 </div>

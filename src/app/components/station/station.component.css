@@ -1,5 +1,68 @@
 .station {
     display: flex;
-    align-items: center;
     justify-content: space-around;
+    margin-top: 50px;
+}
+
+.borne {
+    background: #b3b2b2;
+    height: 500px;
+    padding: 0 10px;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.borne h2 {
+    width: 100%;
+    margin-top: 0;
+    padding: 10px 10px;
+    margin-left: -10px;
+    border-bottom: 2px solid black;
+    background: red;
+}
+
+.detail {
+    height: calc(100% - 100px);
+    padding: 0 20px;
+}
+
+.borne_id {
+    text-align: center;
+}
+
+.screen {
+    border: 2px solid black;
+    width: 75%;
+    height: 25%;
+    padding: 10px;
+    margin: 0 auto 50px;
+    border-radius: 15px;
+    background: #2f2f2f;
+}
+
+.buttons {
+    display: grid;
+    gap: 20px;
+    text-align: center;
+}
+
+button {
+    background: #4f4c4c;
+    color: white;
+}
+
+hr {
+    margin-top: auto;
+    height: 20px;
+    width: 100%;
+    padding: 10px 10px;
+    margin-left: -10px;
+    background: #4f4c4c;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+p {
+    color: white;
 }
