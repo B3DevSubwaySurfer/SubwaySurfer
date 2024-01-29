@@ -7,11 +7,11 @@
 <div class="map-container">
     <!-- Ligne 1 -->
     <div class="line line1">
-        <div *ngFor="let station of appService.metroLine1; let i = index" [ngClass]="{
-                 'station': true,
-                 'station-medium-ink': getStationInkStatus(station) === 'medium',
-                 'station-critical-ink': getStationInkStatus(station) === 'critical'
-             }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, appService.metroLine1.length)"
+        <div *ngFor="let station of metroLines['MetroLine1']; let i = index" [ngClass]="{
+            'station': true,
+            'station-medium-ink': stationInkStatuses[station.id] === 'medium',
+            'station-critical-ink': stationInkStatuses[station.id] === 'critical'
+        }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine1'].length)"
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
@@ -19,11 +19,11 @@
 
     <!-- Ligne 2A -->
     <div class="line line2 line2A">
-        <div *ngFor="let station of appService.metroLine2A; let i = index" [ngClass]="{
-                 'station': true,
-                 'station-medium-ink': getStationInkStatus(station) === 'medium',
-                 'station-critical-ink': getStationInkStatus(station) === 'critical'
-             }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, appService.metroLine2A.length)"
+        <div *ngFor="let station of metroLines['MetroLine2A']; let i = index" [ngClass]="{
+             'station': true,
+             'station-medium-ink': stationInkStatuses[station.id] === 'medium',
+     'station-critical-ink': stationInkStatuses[station.id] === 'critical'
+         }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine2A'].length)"
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
@@ -31,25 +31,24 @@
 
     <!-- Ligne 2B -->
     <div class="line line2 line2B">
-        <div *ngFor="let station of appService.metroLine2B; let i = index" [ngClass]="{
-                 'station': true,
-                 'station-medium-ink': getStationInkStatus(station) === 'medium',
-                 'station-critical-ink': getStationInkStatus(station) === 'critical'
-             }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, appService.metroLine2B.length)"
+        <div *ngFor="let station of metroLines['MetroLine2B']; let i = index" [ngClass]="{
+             'station': true,
+             'station-medium-ink': stationInkStatuses[station.id] === 'medium',
+     'station-critical-ink': stationInkStatuses[station.id] === 'critical'
+         }" (click)="onSelectStation(station)" [style.left]="getStationPosition(i, metroLines['MetroLine2B'].length)"
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
     </div>
-</div>
 
-<div class="menu-content" [class.menu-closed]="!showMenu" [style.display]="showMenu ? 'block' : 'none'">
-    <button class="close-menu" (click)="toggleMenu()">X</button>
-    <h2>Sélectionner un agent :</h2>
-    <div *ngFor="let agent of agents; let i = index" class="agent">
-        <img [src]="agent.photoUrl" alt="Photo de l'agent">
-        <p>{{ agent.name }}</p>
-        <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
+    <div class="menu-content" [class.menu-closed]="!showMenu" [style.display]="showMenu ? 'block' : 'none'">
+        <button class="close-menu" (click)="toggleMenu()">X</button>
+        <h2>Sélectionner un agent :</h2>
+        <div *ngFor="let agent of agents; let i = index" class="agent">
+            <img [src]="agent.photoUrl" alt="Photo de l'agent">
+            <p>{{ agent.name }}</p>
+            <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
+        </div>
+        <app-agents (agentAssigned)="onAgentAssigned($event)" [selectedAgent]="selectedAgent"
+            (closePopupEvent)="hideAgents()"></app-agents>
     </div>
-    <app-agents class= "assigner" [ngClass]="showAgents"
-    [selectedAgent]="selectedAgent"></app-agents>
-</div>

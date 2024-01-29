@@ -10,6 +10,7 @@ import { AppService } from "../../../services/app.service";
 })
 export class StationComponent implements OnInit {
   @Input() stationData!: any;
+  @Input() bornes: BorneClasse[] = [];
 
   constructor(private route: ActivatedRoute, private appService: AppService) { }
 

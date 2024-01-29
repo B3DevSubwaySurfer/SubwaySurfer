@@ -11,6 +11,52 @@ import { StationClasse } from "../../../classes/station.classe";
 export class HomeComponent {
 
   showAgents = 'hidden';
+  stations: StationClasse[] = [];
+  metroLines: { [key: string]: StationClasse[] } = {};
+  selectedAgent: { name: string, photoUrl: string } | null;
+  selectedStation: string | null = null;
+  bornes: any[] = [];
+  showMenu = false;
+  showPopup = false;
+  popupInterval: any;
+
+  constructor(public appService: AppService, private router: Router) {
+    this.selectedAgent = null;
+  }
+
+  ngOnInit() {
+    this.schedulePopup();
+    this.appService.getStations().then(async (stations) => {
+      this.stations = stations;
+      this.groupStationsByLine();
+    
+      // Mettez à jour le statut d'encre pour chaque station une fois au début
+      for (const lineName in this.metroLines) {
+        for (const station of this.metroLines[lineName]) {
+          await this.updateStationInkStatus(station);
+        }
+      }
+  
+      // Permet de Mettre à jour le statut d'encre pour chaque station à intervalles réguliers
+      setInterval(async () => {
+        for (const lineName in this.metroLines) {
+          for (const station of this.metroLines[lineName]) {
+            await this.updateStationInkStatus(station);
+          }
+        }
+      }, 5000);
+    });
+  }
+
+  groupStationsByLine() {
+    for (let station of this.stations) {
+      const lineName = station.metroLine.name;
+      if (!this.metroLines[lineName]) {
+        this.metroLines[lineName] = [];
+      }
+      this.metroLines[lineName].push(station);
+    }
+  }
 
   agents = [
     { name: 'Vianney', photoUrl: 'url-to-agent-1-photo', status: 'Disponible' },
@@ -19,62 +65,87 @@ export class HomeComponent {
     { name: 'Baptiste', photoUrl: 'url-to-agent-4-photo', status: 'Disponible' },
   ];
 
-  selectedAgent: { name: string, photoUrl: string } | null;
-
-  constructor(public appService: AppService, private router: Router) {
-    this.selectedAgent = null;
+  onSelectStation(station: StationClasse): void {
+    this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
   }
-
-  onSelectAgent(agent: { name: string, photoUrl: string }) {
-    this.selectedAgent = agent;
-    this.showAgents = 'visible';
-  }
-
-  selectedStation: string | null = null;  // Déclaration de la propriété
 
   getStationPosition(index: number, arrayLength: number): string {
     return (index / (arrayLength - 1)) * 100 + '%';
   }
 
-  onSelectStation(station: StationClasse): void {
-    this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
-  }
+  onSelectAgent(agent: { name: string, photoUrl: string }) {
+    this.selectedAgent = agent;
+    this.showAgents = 'visible';
 
-  getStationInkStatus(station: StationClasse): string {
-    const lowestInkLevel = Math.min(...station.bornes.map(b => b.ink_level));
-
-    if (lowestInkLevel <= 10) {
-      return 'critical';
-    } else if (lowestInkLevel <= 50) {
-      return 'medium';
-    } else {
-      return 'normal';
+    // Assign the agent to the selected station
+    if (this.selectedStation) {
+      let stationId = Number(this.selectedStation);
+      for (let line in this.metroLines) {
+        let station = this.metroLines[line].find(station => station.id === stationId);
+        if (station) {
+          station.agent = agent;
+          break;
+        }
+      }
     }
   }
 
-  showMenu = false;
+  onAgentAssigned(updatedStation: any) {
+    for (let line in this.metroLines) {
+      let stationIndex = this.metroLines[line].findIndex(station => station.id === updatedStation.id);
+      if (stationIndex !== -1) {
+        this.metroLines[line][stationIndex] = updatedStation;
+        break;
+      }
+    }
+  }
+
+  hideAgents() {
+    this.showAgents = 'hidden';
+  }
+
+  stationInkStatuses: { [stationId: number]: string } = {};
+
+  async updateStationInkStatus(station: StationClasse): Promise<void> {
+    // Récupérez les bornes de la station
+    const allBornes = await this.appService.getBornes();
+    const stationBornes = allBornes.filter(borne => borne.station_id === station.id);
+
+    // Calculez le niveau moyen d'encre de toutes les bornes de la station
+    const averageInkLevel = stationBornes.reduce((sum, borne) => sum + borne.level, 0) / stationBornes.length;
+
+    // Définissions des seuils pour les niveaux d'encre 'medium' et 'critical'
+    const mediumThreshold = 50; 
+    const criticalThreshold = 20; 
+
+    // Déterminez le statut en fonction du niveau moyen d'encre
+    let status;
+    if (averageInkLevel <= criticalThreshold) {
+      status = 'critical';
+    } else if (averageInkLevel <= mediumThreshold) {
+      status = 'medium';
+    } else {
+      status = 'normal';
+    }
+
+    // Mettez à jour le statut d'encre de la station
+    this.stationInkStatuses[station.id] = status;
+  }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
   }
 
-  showPopup = false;
-  popupInterval: any;
-
   showProblemPopup() {
     this.showPopup = true;
   }
 
-  ngOnInit() {
-    this.schedulePopup();
-  }
-  
   schedulePopup() {
     // Generate a random time between 1 and 5 minutes
     const time = Math.random() * (5 - 1) + 1; // time in minutes
     // const timeInMs = time * 1000; // convert time to milliseconds
     const timeInMs = time * 60 * 1000; // convert time to milliseconds
-  
+
     this.popupInterval = setTimeout(() => {
       this.showProblemPopup();
       this.schedulePopup(); // schedule the next popup

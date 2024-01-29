@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../../../services/app.service';  // Importez AppService
+import { BorneClasse } from "../../../classes/borne.classe";
 
 @Component({
   selector: 'app-station-preview',
@@ -10,6 +11,7 @@ import { AppService } from '../../../services/app.service';  // Importez AppServ
 export class StationPreviewComponent implements OnInit {
   stationName: string = '';
   stationData: any;
+  bornes: BorneClasse[] = [];
 
   constructor(
       private route: ActivatedRoute,
@@ -20,7 +22,19 @@ export class StationPreviewComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.stationName = params['stationName'];
-      this.stationData = this.appService.getStationData(this.stationName);
+      console.log('Station name:', this.stationName);
+      this.appService.getStations().then(stations => {
+        const selectedStation = stations.find(station => station.name === this.stationName);
+        if (selectedStation) {
+          this.stationData = selectedStation; // Assignez la station sélectionnée à stationData    
+          this.appService.getBornes().then(bornes => {
+            this.bornes = bornes.filter(borne => borne.station_id === selectedStation.id);
+            console.log('Bornes for station:', this.bornes);
+          });
+        } else {
+          console.log('Station not found');
+        }
+      });
     });
   }
 

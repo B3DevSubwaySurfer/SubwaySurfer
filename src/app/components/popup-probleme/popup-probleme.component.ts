@@ -18,14 +18,14 @@ export class PopupProblemeComponent {
   }
 
   ngOnInit() {
-    const stations = this.appService.getAllStations();
-    const stationNames = stations.map(station => station.name);
-    const randomIndex = Math.floor(Math.random() * stationNames.length);
-    this.randomStationName = stationNames[randomIndex];
-
-    // Define a list of possible problems
-    const problems = ['d\'inondations', 'd\'incendie', 'd\'electricités', 'fraudes'];
-    const randomProblemIndex = Math.floor(Math.random() * problems.length);
-    this.randomProblem = problems[randomProblemIndex]; // Select a random problem
+    this.appService.getStations().then(stations => {
+      const randomIndex = Math.floor(Math.random() * stations.length);
+      this.randomStationName = stations[randomIndex].name;
+  
+      // Define a list of possible problems
+      const problems = ['d\'inondations', 'd\'incendie', 'd\'electricités', 'fraudes'];
+      const randomProblemIndex = Math.floor(Math.random() * problems.length);
+      this.randomProblem = problems[randomProblemIndex]; // Select a random problem
+    });
   }
 }
