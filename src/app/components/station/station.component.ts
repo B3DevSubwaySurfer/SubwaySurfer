@@ -22,10 +22,15 @@ export class StationComponent implements OnInit {
     this.router.navigate(['/ink-level-game'], { queryParams: { borne: JSON.stringify(borne) } });
   }
 
-
-
   gotToPaperLevelGame(borne: BorneClasse) {
     this.router.navigate(['/paper-level-game']);
+    this.appService.resetPaperLevelForBorne(borne);
+  }
+
+  resetInkLevel(borne: BorneClasse) {
+    this.appService.resetInkLevelForBorne(borne);
+  }
+  resetPaperLevel(borne: BorneClasse) {
     this.appService.resetPaperLevelForBorne(borne);
   }
 }
