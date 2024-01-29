@@ -1,5 +1,23 @@
 <!-- home.component.html -->
-<h1 style="text-align: center;">Bienvenue dans le métro de Lille !</h1>
+<div class="notification-bell">
+    <button (click)="showNotifications()"><i class="fas fa-bell"></i></button>
+</div>
+
+<div class="notification-menu">
+    <button (click)="hideNotifications()">Fermer</button>
+    <h2>Notifications</h2>
+    <ul>
+        <li *ngFor="let notification of notifications; let i = index">
+            {{ notification }}
+            <button (click)="removeNotification(i)">Supprimer</button>
+        </li>
+    </ul>
+    <p *ngIf="notifications.length === 0">Vous n'avez pas de notifications pour le moment !</p>
+</div>
+<div id="Text">
+    <span>Ilévia</span>
+    <span>Lille</span>
+</div>
 <button class="burger-menu" (click)="toggleMenu()">☰</button>
 
 <app-popup-probleme *ngIf="showPopup" (closePopup)="showPopup = false"></app-popup-probleme>
@@ -15,6 +33,7 @@
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
+        <div class="metro"></div>
     </div>
 
     <!-- Ligne 2A -->
@@ -27,6 +46,7 @@
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
+        <div class="metro"></div>
     </div>
 
     <!-- Ligne 2B -->
@@ -39,6 +59,7 @@
             [attr.data-name]="station.name">
             <p *ngIf="station.agent">{{ station.agent.name }}</p>
         </div>
+        <div class="metro"></div>
     </div>
 
     <div class="menu-content" [class.menu-closed]="!showMenu" [style.display]="showMenu ? 'block' : 'none'">
@@ -46,9 +67,49 @@
         <h2>Sélectionner un agent :</h2>
         <div *ngFor="let agent of agents; let i = index" class="agent">
             <img [src]="agent.photoUrl" alt="Photo de l'agent">
-            <p>{{ agent.name }}</p>
             <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
         </div>
         <app-agents (agentAssigned)="onAgentAssigned($event)" [selectedAgent]="selectedAgent"
             (closePopupEvent)="hideAgents()"></app-agents>
+    </div>
+
+
+
+    <div id="electric">
+    </div>
+    <div id="metro1">
+    </div>
+    <div id="metro">
+        <span class="back">
+            <div class="door"></div>
+            <div class="mirror">
+                <span class="m1"></span>
+                <span class="m2"></span>
+                <span class="m3"></span>
+                <span class="m4"></span>
+            </div>
+            <div class="door2"></div>
+        </span>
+        <span class="back">
+            <div class="door"></div>
+            <div class="mirror">
+                <span class="m1"></span>
+                <span class="m2"></span>
+                <span class="m3"></span>
+                <span class="m4"></span>
+            </div>
+            <div class="door2"></div>
+        </span>
+        <span class="engine">
+            <div class="spark">
+            </div>
+            <div class="spark1"></div>
+            <div class="door"></div>
+            <div class="mirror1">
+                <span class="m1"></span>
+                <span class="m22"></span>
+            </div>
+        </span>
+    </div>
+    <div class="track">
     </div>
