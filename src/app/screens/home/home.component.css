@@ -94,7 +94,7 @@
     width: 400px;
     max-height: 100vh;
     overflow: auto;
-    background-color: black; 
+    background-color: white; 
     animation: slideInRight 0.5s forwards;
 }
 
@@ -111,13 +111,34 @@
 
 .menu-content h2 {
     margin-left: 20px;
+    color: black;
 }
 
 .menu-content .agent {
     display: flex;
+    align-items: center;
     flex-direction: row;
     margin-top: 20px;
     margin-left: 20px;
+    color: white;
+}
+
+.menu-content button {
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-content button:hover {
+    background-color: black;
+    color: white;
 }
 
 .agent img {

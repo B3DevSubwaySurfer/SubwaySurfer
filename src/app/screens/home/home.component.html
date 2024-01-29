@@ -49,7 +49,6 @@
         <h2>Sélectionner un agent :</h2>
         <div *ngFor="let agent of agents; let i = index" class="agent">
             <img [src]="agent.photoUrl" alt="Photo de l'agent">
-            <p>{{ agent.name }}</p>
             <button (click)="onSelectAgent(agent)">Voir la disponibilité</button>
         </div>
         <app-agents (agentAssigned)="onAgentAssigned($event)" [selectedAgent]="selectedAgent"
