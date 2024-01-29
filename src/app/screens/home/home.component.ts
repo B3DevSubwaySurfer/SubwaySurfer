@@ -179,4 +179,33 @@ export class HomeComponent {
   removeNotification(index: number) {
     this.notifications.splice(index, 1);
   }
+
+
+  showFullscreenImage = false;
+
+  // Other properties and methods...
+
+  // Add a new method to handle the click on the metro div
+  onMetroClick() {
+    this.showFullscreenImage = true;
+    const randomIndex = Math.floor(Math.random() * this.imageUrls.length);
+    this.currentImageUrl = this.imageUrls[randomIndex];
+    this.showFullscreenImage = true;
+  }
+
+  // Add a new method to hide the fullscreen image
+  hideFullscreenImage() {
+    this.showFullscreenImage = false;
+  }
+  
+  imageUrls = [
+    'https://media.istockphoto.com/id/1207964617/vector/people-sitting-and-standing-inside-subway-transport-metro.jpg?s=612x612&w=0&k=20&c=sg-VEwI_qbvIzQR49vInPDNHqvtIFIKTn7PYVFsvjDg=',
+    'https://static.vecteezy.com/ti/vecteur-libre/p1/3211078-personnes-a-l-interieur-d-une-rame-de-metro-passagers-de-metro-frontiere-transparente-vectoriel.jpg',
+    'https://img.freepik.com/vecteurs-premium/personnes-interieur-illustration-plate-du-metro-du-train-souterrain-dessin-anime-passagers-utilisant-metro-tube-comme-transport-public_74855-16913.jpg',
+    'https://media.istockphoto.com/id/1219772185/fr/vectoriel/concept-de-distanciation-sociale-pour-covid-19-avec-les-gens-dans-un-train.jpg?s=612x612&w=0&k=20&c=uGwxecoVz3sp5VmN684RO-jYO2UuAtDAas5SxeAueog=',
+    'https://static.vecteezy.com/ti/vecteur-libre/p1/8191749-interieur-de-bus-avec-passagers-personnages-dessins-animes-gratuit-vectoriel.jpg',
+    'https://us.123rf.com/450wm/ntlstudio/ntlstudio2012/ntlstudio201200030/160418033-passagers-masqu%C3%A9s-dans-les-transports-publics-illustration-vectorielle-de-couleur-plate-sant%C3%A9.jpg?ver=6',
+  ];
+
+  currentImageUrl = '';
 }
