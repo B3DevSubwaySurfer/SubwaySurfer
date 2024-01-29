@@ -1,4 +1,13 @@
 <!-- home.component.html -->
+<!-- Popup de Sélection d'Agent -->
+<div *ngIf="showSelectAgentPopup" class="agent-select-popup">
+    <h3>Sélectionnez un agent pour l'alerte: {{ currentAlert }}</h3>
+    <ul>
+        <li *ngFor="let agent of securityService.agents" (click)="assignAgent(agent)">
+            {{ agent.name }} - {{ agent.isAvailable ? 'Disponible' : 'Occupé' }}
+        </li>
+    </ul>
+</div>
 <div class="map-container">
     <!-- Ligne 1 -->
     <div class="line line1">
