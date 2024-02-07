@@ -7,6 +7,7 @@ mod server;
 // Cette ligne importe la fonction `get_stations` du module `server`.
 use server::get_bornes;
 use server::get_stations;
+use server::get_agents;
 
 // La fonction `main` est le point d'entrée de notre application.
 pub fn main() -> std::io::Result<()> {
@@ -15,10 +16,12 @@ pub fn main() -> std::io::Result<()> {
     db::create_metro_lines_table().expect("Failed to create metro lines table"); 
     db::create_stations_table().expect("Failed to create stations table");
     db::create_bornes_table().expect("Failed to create bornes table");
+    db::create_agents_table().expect("Failed to create agents table");
 
     // Insérer les lignes de métro
     // Vous devez implémenter la fonction `insert_metro_lines` vous-même.
     db::insert_metro_lines().expect("Failed to insert metro lines");
+    db::insert_agents().expect("Failed to insert agents");
 
     // Insérer les stations et récupérer leurs ID
     let station_ids = db::insert_stations().expect("Failed to insert stations");
@@ -31,7 +34,7 @@ pub fn main() -> std::io::Result<()> {
     // Cette partie crée et exécute votre application Tauri.
     tauri::Builder::default()
         // Enregistre les fonctions `get_stations` et `get_bornes` comme des gestionnaires d'appel, permettant au code JavaScript du frontend d'appeler ces fonctions via l'API `invoke` de Tauri.
-        .invoke_handler(tauri::generate_handler![get_stations, get_bornes])
+        .invoke_handler(tauri::generate_handler![get_stations, get_bornes, get_agents])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 

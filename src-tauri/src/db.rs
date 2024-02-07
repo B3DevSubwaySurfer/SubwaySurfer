@@ -63,6 +63,19 @@ pub fn create_bornes_table() -> std::result::Result<(), mysql::Error> {
     Ok(())
 }
 
+// Cette fonction crée la table "agents" dans la base de données "subwaysurfer" si elle n'existe pas déjà.
+pub fn create_agents_table() -> std::result::Result<(), mysql::Error> {
+    let mut conn = POOL.get_conn()?;
+    conn.query_drop(
+        r"CREATE TABLE IF NOT EXISTS subwaysurfer.agents (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            status VARCHAR(50) NOT NULL
+        )"
+    )?;
+    Ok(())
+}
+
 // Modifier la fonction pour inclure 'line_id' lors de l'insertion des stations
 pub fn insert_stations() -> std::result::Result<Vec<i32>, mysql::Error> {
     let mut conn = POOL.get_conn()?;
@@ -210,4 +223,36 @@ pub fn insert_metro_lines() -> std::result::Result<Vec<i32>, mysql::Error> {
         }
     }
     Ok(ids)
+}
+
+// Cette fonction insère les agents dans la table "agents".
+pub fn insert_agents() -> std::result::Result<(), mysql::Error> {
+    let mut conn = POOL.get_conn()?;
+    let agents = vec![
+        ("Vianney", "Disponible"),
+        ("Thibaut", "Disponible"),
+        ("Théotime", "Disponible"),
+        ("Baptiste", "Disponible"),
+    ];
+    for agent in agents {
+        println!("Inserting agent: {:?}", agent);
+        
+        let results: Vec<(i32,)> = conn.exec(
+            r"SELECT id FROM subwaysurfer.agents WHERE name = :name",
+            params! {
+                "name" => &agent.0,
+            }
+        )?;
+        
+        if results.is_empty() {
+            conn.exec_drop(
+                r"INSERT INTO subwaysurfer.agents (name, status) VALUES (:name, :status)",
+                params! {
+                    "name" => &agent.0,
+                    "status" => &agent.1,
+                }
+            )?;
+        }
+    }
+    Ok(())
 }

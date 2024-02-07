@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BorneClasse } from '../classes/borne.classe';
 import { StationClasse } from '../classes/station.classe';
 import { MetroLineClasse } from '../classes/metroLine.classe';
+import { AgentClasse } from '../classes/agents.classe';
 import { invoke } from '@tauri-apps/api/tauri'
 
 interface StationData {
@@ -22,6 +23,12 @@ interface MetroLineData {
   id: number;
   name: string;
 }
+
+type AgentData = {
+  name: string;
+  photoUrl: string;
+  status: string;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +58,17 @@ export class AppService {
     return invoke<StationData[]>('get_stations')
       .then(data => {
         return data.map((station: StationData) => new StationClasse(station.id, station.name, new MetroLineClasse(station.metro_line.id, station.metro_line.name), station.bornes));
+      })
+      .catch(error => {
+        console.error(error);
+        return [];
+      });
+  }
+
+  public getAgents(): Promise<AgentClasse[]> {
+    return invoke<AgentData[]>('get_agents')
+      .then(data => {
+        return data.map((agent: AgentData) => new AgentClasse(agent.name, agent.photoUrl, agent.status));
       })
       .catch(error => {
         console.error(error);

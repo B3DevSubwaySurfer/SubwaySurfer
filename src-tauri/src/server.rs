@@ -24,6 +24,12 @@ pub struct MetroLine {
     name: String,
 }
 
+#[derive(Debug, PartialEq, Eq, Serialize)]
+pub struct Agent {
+    name: String,
+    status: String,
+}
+
 #[tauri::command]
 pub async fn get_stations() -> Vec<Station> {
     let mut conn = POOL.get_conn().unwrap();
@@ -48,6 +54,19 @@ pub async fn get_bornes() -> Vec<Borne> {
         "SELECT id, station_id, level, max_level FROM bornes",
         |(id, station_id, level, max_level)| {
             Borne { id, station_id, level, max_level }
+        },
+    ).unwrap();
+
+    result
+}
+
+#[tauri::command]
+pub async fn get_agents() -> Vec<Agent> {
+    let mut conn = POOL.get_conn().unwrap();
+    let result: Vec<Agent> = conn.query_map(
+        "SELECT name, status FROM agents",
+        |(name, status)| {
+            Agent { name, status }
         },
     ).unwrap();
 

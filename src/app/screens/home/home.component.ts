@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from "../../../services/app.service";
 import { StationClasse } from "../../../classes/station.classe";
+import { AgentClasse } from "../../../classes/agents.classe";
 import { NotificationService } from '../../../services/notification.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class HomeComponent {
 
   showAgents = 'hidden';
   stations: StationClasse[] = [];
+  agents: AgentClasse[] = [];
   metroLines: { [key: string]: StationClasse[] } = {};
   selectedAgent: { name: string, photoUrl: string } | null;
   selectedStation: string | null = null;
@@ -47,6 +49,14 @@ export class HomeComponent {
         }
       }, 5000);
     });
+
+    this.appService.getAgents().then(agents => {
+      // Pour chaque agent, ajoutez une propriété `photoUrl` qui est l'URL de l'image pour cet agent.
+      this.agents = agents.map(agent => ({
+        ...agent,
+        photoUrl: this.agentImages[agent.name],
+      }));
+    });
   }
 
   groupStationsByLine() {
@@ -59,12 +69,20 @@ export class HomeComponent {
     }
   }
 
-  agents = [
-    { name: 'Vianney', photoUrl: '../../../assets/vianney.jpeg', status: 'Disponible' },
-    { name: 'Thibaut', photoUrl: '../../../assets/thibaut.jpeg', status: 'Disponible' },
-    { name: 'Théotime', photoUrl: '../../../assets/Theotime.jpeg', status: 'Disponible' },
-    { name: 'Baptiste', photoUrl: '../../../assets/baptiste.jpeg', status: 'Disponible' },
-  ];
+  agentImages: Record<string, string> = {
+    'Vianney': '../../../assets/vianney.jpeg',
+    'Thibaut': '../../../assets/thibaut.jpeg',
+    'Théotime': '../../../assets/Theotime.jpeg',
+    'Baptiste': '../../../assets/baptiste.jpeg',
+    // Ajoutez d'autres agents et leurs URLs d'image ici.
+  };
+
+  // agents = [
+  //   { name: 'Vianney', photoUrl: '../../../assets/vianney.jpeg', status: 'Disponible' },
+  //   { name: 'Thibaut', photoUrl: '../../../assets/thibaut.jpeg', status: 'Disponible' },
+  //   { name: 'Théotime', photoUrl: '../../../assets/Theotime.jpeg', status: 'Disponible' },
+  //   { name: 'Baptiste', photoUrl: '../../../assets/baptiste.jpeg', status: 'Disponible' },
+  // ];
 
   onSelectStation(station: StationClasse): void {
     this.router.navigate(['/preview'], { queryParams: { stationName: station.name } });
