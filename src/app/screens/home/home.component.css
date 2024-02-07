@@ -121,6 +121,7 @@
    position: fixed;
    top: 0;
    right: 0;
+   margin: 10px;
 }
 
 .menu-content {
@@ -245,8 +246,13 @@
    overflow: auto;
    padding: 20px;
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-   transform: translateY(-100%);
+   transform: translateY(-200%);
    transition: transform 0.3s ease-out;
+}
+
+.notification-bell button{
+   padding: 10px;
+
 }
 
 .notification-menu.show {
