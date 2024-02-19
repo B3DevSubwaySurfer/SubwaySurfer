@@ -3,7 +3,7 @@
 <div *ngIf="showSelectAgentPopup" class="agent-select-popup">
     <h3>Sélectionnez un agent pour l'alerte: {{ currentAlert }}</h3>
     <ul>
-        <li *ngFor="let agent of securityService.agents" (click)="assignAgent(agent)">
+        <li *ngFor="let agent of getAgents()" (click)="assignAgent(agent)">
             {{ agent.name }} - {{ agent.isAvailable ? 'Disponible' : 'Occupé' }}
         </li>
     </ul>

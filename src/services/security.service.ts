@@ -4,39 +4,49 @@ import { SecurityAgent } from '../classes/agent.classe';
 @Injectable({
     providedIn: 'root',
 })
+
 export class SecurityService {
-    agents: SecurityAgent[] = [
+    public agents: SecurityAgent[] = [
         new SecurityAgent('Thibaut'),
         new SecurityAgent('Vianney'),
         new SecurityAgent('Théotime'),
         new SecurityAgent('Baptiste'),
     ];
 
-    assignAgentToAlert(alertMessage: string, agentName: string): void {
+    private alertToAgentMap = new Map<string, string>();
+
+    assignAgentToAlert(alertMessage: string, agentName: string): boolean {
         const agent = this.agents.find(a => a.name === agentName);
         if (agent && agent.isAvailable) {
             agent.isAvailable = false;
+            this.alertToAgentMap.set(alertMessage, agentName); // Mise à jour de la map pour associer l'alerte à l'agent
             console.log(`Agent ${agent.name} assigné à l'alerte: ${alertMessage}`);
-            // Autres logiques spécifiques à l'assignation
+            return true;
         }
+        return false;
+    }
+
+    getAssignedAgentForAlert(alertMessage: string): string | null {
+        return this.alertToAgentMap.get(alertMessage) || null;
     }
 
     releaseAgent(agentName: string): void {
         const agent = this.agents.find(a => a.name === agentName);
         if (agent) {
             agent.isAvailable = true;
+            // Supprimer l'agent de la map pour nettoyer les entrées après libération
+            this.alertToAgentMap.forEach((value, key) => {
+                if (value === agentName) this.alertToAgentMap.delete(key);
+            });
             console.log(`Agent ${agentName} libéré`);
         }
     }
 
     resolveAlert(alertMessage: string): void {
         console.log(`Alerte résolue: ${alertMessage}`);
-        // Libérer un agent assigné à l'alerte
-        // Par exemple, libérer le premier agent non disponible (simplification)
-        const busyAgent = this.agents.find(agent => !agent.isAvailable);
-        if (busyAgent) {
-            this.releaseAgent(busyAgent.name);
+        const agentName = this.getAssignedAgentForAlert(alertMessage);
+        if (agentName) {
+            this.releaseAgent(agentName);
         }
     }
 }
-
