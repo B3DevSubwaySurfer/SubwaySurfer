@@ -296,5 +296,4 @@ export class AppService {
     public resetPaperLevelForBorne(borne: BorneClasse) {
         borne.resetPaperLevels(100);
     }
-
 }

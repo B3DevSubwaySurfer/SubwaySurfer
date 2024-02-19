@@ -1,3 +1,5 @@
-<!--<app-home></app-home>-->
-<router-outlet ></router-outlet>
-<!--<app-station stationName="name"></app-station>-->
+<button (click)="playAudio()">Play</button>
+<audio #audioOption>
+    <source src='../assets/sounds/subway_surfers.mp3' type="audio/mp3">
+</audio>
+<router-outlet></router-outlet>
